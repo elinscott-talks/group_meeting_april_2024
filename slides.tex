@@ -5,6 +5,7 @@
 \usepackage[style=verbose-note, sorting=none, sortcites=true, maxnames=1, giveninits=true, autocite=superscript, doi=false, url=false, isbn=false, backend=biber, citetracker=false, pagetracker=false, bibencoding=utf8, eprint=false]{biblatex}
 % \usepackage[backend=bibtex,style=authoryear-comp,citestyle=authoryear-comp,firstinits=true,sorting=none,maxnames=1,doi=false,isbn=false,url=false,eprint=false]{biblatex}
 \usepackage[T1]{fontenc}
+\usepackage[normalem]{ulem}
 
 \definecolor{twitter_blue}{HTML}{1da1f2}
 \input{seaborn_colours.tex}
@@ -65,7 +66,7 @@
 \renewbibmacro{in:}{}
 \DeclareFieldFormat{pages}{\mkfirstpage{#1}}
 \beamertemplatenavigationsymbolsempty
-\bibliography{zotero_library.bib}
+\bibliography{references.bib}
 \setbeamertemplate{bibliography item}[text]
 \renewbibmacro{in:}{}
 \AtEveryBibitem{\clearfield{title}}
@@ -92,7 +93,8 @@
 \usepackage{cleveref}
 % Tikz
 \usepackage{tikz}
-\usetikzlibrary{positioning,shapes,arrows,backgrounds,fit,calc,external,trees,tikzmark}
+\usetikzlibrary{positioning,shapes,arrows,backgrounds,fit,calc,external,trees,tikzmark,fadings}
+\tikzfading[name=fade bottom,top color=transparent!0, bottom color=transparent!100]
 % \tikzexternalize[prefix=tikzfigures/]
 \tikzstyle{dummy} = []
 \tikzstyle{line} = [draw, thick, -latex']
@@ -332,7 +334,7 @@
   \textbf{BLOR}
 
   \large
-  \textbf{a DFT+U-like functional that properly linearizes the total energy}
+  \textbf{a DFT+U-inspired functional that properly linearizes the total energy}
   \end{center}
   \end{minipage}
   \end{tcolorbox}
@@ -360,224 +362,258 @@
 \date{6 June 2023}
 \begin{document}
 
+\begin{frame}{Lorde: Te Ao Mārama}
+    \centering
+
+
+    \includegraphics[height=0.5\paperheight]{te_ao_maarama/lorde.jpg} \hspace{1em}
+    \includegraphics[height=0.5\paperheight]{te_ao_maarama/te_ao_maarama.jpg}
+
+    \vspace{6pt}
+
+    ``The future of music'' -- David Bowie
+
+    \vspace{6pt}
+
+    \tiny \href{https://www.youtube.com/watch?v=H1u0ukFst60&ab_channel=LordeVEVO}{click here for video}
+\end{frame}
+
 \begin{frame}{Leaving the group}
-   \centering
-   \includegraphics[width=0.9\textwidth]{figures/leaving_the_group.png}
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/leaving_the_group.png}
 \end{frame}
 
 \frame{\titlepage}
 % \frame{\titlepage}
 
-% Preamble
-% \begin{abstract}
-%     From various discussions it has become clear that the standard DFT+\emph{U}+\emph{V} functional as developed and used at THEOS has several notable drawbacks. Chief among these is the fact that the corrections are applied to both spin channels equally. This is not a good idea when one spin channel is completely empty/filled and lying very far above/below the Fermi level, therefore not contributing to the value of $U$ but nevertheless being subjected to it. In these notes I review the findings of Linscott et al. 2018, and I explore the possibilities for a novel DFT+\emph{U}-inspired functional that does not apply the same value of $U$ to both spin channels, as well as the possibility of a correction that addresses static correlation error.
-% \end{abstract}
-% 
-% \maketitle
-% 
-% \section{The problem}
-% This discussion was inspired by the following results of Fatemeh Haddadi: for monolayers of CrI\textsubscript{3}, the unoccupied spin-down Hubbard bands are dramatically by a Hubbard correction. We guess that this should not happen\footnote{N.B. to properly determine this we ought to calculate spin-resolved response matrices; see the following section} because these bands are expected not to play a significant role in determining the value of $U$.
-% 
-% \begin{frame}{The problem}
-% \begin{figure}[b!]
-%     \includegraphics[width=\columnwidth]{figures/fig_haddadi_bs.png}
-%     \caption{Band structure of a CrI\textsubscript{3} monolayer, as calculated with DFT, DFT+U, and DFT+U+V}
-% \end{figure}
-% \end{frame}
-% 
-% 
-% \section{Lessons from Linscott et al. 2018}
-% In a paper a few years ago, David O'Regan and I worked on a spin-resolved formulation of DFT+\emph{U} \cite{Linscott2018}. In this framework, all the matrices acquire an additional two spin indices e.g. the interacting and non-interacting response matrices are now
-% %
-% \begin{frame}{Spin-resolved linear response}
-% \begin{equation}
-%     \chi_{IJ\sigma\sigma'} = \frac{dn^{I\sigma}}{dv^{J\sigma'}_\mathrm{ext}}; \qquad
-%     \chi^0_{IJ\sigma\sigma'} = \frac{dn^{I\sigma}}{dv^{J\sigma'}_\mathrm{KS}}
-%     \label{eqn:spin_resolved_chi}
-% \end{equation}
-% %
-% where now our external perturbing potential takes the form
-% %
-% \begin{equation}
-%     dv^{I\sigma}_\mathrm{ext} = \alpha^\sigma \hat P^I = \alpha^\sigma \sum_m \ket{\varphi^I_m}\bra{\varphi^I_m}
-%     \label{eqn:spin_resolved_v}
-% \end{equation}
-% \end{frame}
-% 
-% \begin{frame}{Results of spin-resolved linear response}
-% \begin{align}
-%     \chi^{\sigma\sigma'} = 
-%     \begin{pmatrix}
-%     -0.192 & 0.141 \\
-%     0.141 & -0.214
-%     \end{pmatrix};
-%     \qquad
-%     \chi_0^{\sigma\sigma'} = 
-%     \begin{pmatrix}
-%     -0.285 & 0.0 \\
-%     0.0 & -0.226
-%     \end{pmatrix}
-% \end{align}
-% %
-% It follows that
-% %
-% \begin{align}
-%     U^{\sigma\sigma'}
-%     = \left(\chi_0^{-1} - \chi^{-1}\right)_{\sigma\sigma'}
-%     =
-%     \begin{pmatrix}
-%         6.54 & 6.62 \\
-%         6.62 & 4.61
-%     \end{pmatrix}
-%     _{\sigma\sigma'}
-% \end{align}
-% 
-% N.B. with a spin-resolved matrix we can reconstruct other perturbations post-hoc e.g. conventional LR
-% 
-% \begin{equation}
-%     dn = \sum_\sigma dn^\sigma = \sum_{\sigma}\left(\sum_{\sigma'} \chi^{\sigma\sigma'}dv^{\sigma'} \right) \stackrel{dv^\uparrow = dv^\downarrow = d\alpha}{\Longrightarrow} \chi = \frac{dn}{d\alpha} = \sum_{\sigma\sigma'} \chi_{\sigma\sigma'}
-% \end{equation}
-% 
-% 
-% \end{frame}
-% %
-% In order to construct our response matrices, we perturbed one spin channel at a time. To then connect these response matrices to $U$ and $J$ parameters you can derive the Dyson equation
-% %
-% \begin{equation}
-%     U_{IJ\sigma\sigma'} = (\chi_0^{-1} - \chi^{-1})_{IJ\sigma\sigma'}
-%     \label{eqn:spin_resolved_U}
-% \end{equation}
-% %
-% However, we immediately encounter a problem when we try and marry this four-rank tensor with the idea of a scalar $U$ that corresponds to the curvature with respect to the \emph{total} occupancy of a particular Hubbard subspace; that is,
-% %
-% \begin{equation}
-%     U^I = \frac{d^2E_\mathrm{Hxc}}{d(n^I)^2} = \frac{1}{2}\frac{d(v_\mathrm{Hxc}^\uparrow + v_\mathrm{Hxc}^\downarrow)}{d(n^{I\uparrow} + n^{I\downarrow})}
-%     \label{eqn:U_as_curvature}
-% \end{equation}
-% %
-% which we clearly cannot simplify to a nice expression involving response matrices. At this point in the paper, we resorted to using a contrived averaging scheme, because we wanted to stay loyal to this definition of $U$.
-% 
-% I propose the way forward is to do away with \cref{eqn:U_as_curvature}; that is, we should not try and calculate a curvature with respect to the \emph{total} occupancy of a subspace. Instead, we should be aiming to correct curvature with respect to the occupancy of subspaces, \emph{one spin channel at a time}. The natural way to do this is simply
-% %
-% \begin{equation}
-%     U^{I\sigma} = \frac{d^2E_\mathrm{Hxc}}{d(n^{I\sigma})^2} = \frac{dv_\mathrm{Hxc}^{I\sigma}}{dn^{I\sigma}}
-%     \label{eqn:Usigma_as_curvature}
-% \end{equation}
-% %
-% We explored this approach Ref.~\cite{Linscott2018}. Various Hubbard parameters for hexahydrated transition metals (aqua-TMs) M(H\textsubscript{2}O)\textsubscript{6} and bulk MnO are tabulated in this fashion in \cref{tab:Udet_metal}, labelled ``$1 \times 1$". Also shown in this table are parameters calculated via conventional linear response, labelled ``scalar". There are a number of important observations we can make.
-% 
-% \begin{table}[t!]
-%     \centering
-%     \caption{Values of $U$ and $J$ (eV) for aqua-TMs and a spin-up manganese atom of MnO, calculated using the various linear response schemes introduced in \cite{Linscott2018}. Note that we struggled to get the Fe\textsuperscript{3+} calculation to converge (hence the missing data) and Co\textsuperscript{3+} is the only one of these systems with a low-spin (i.e. singlet) ground state (hence $U^\uparrow = U^\downarrow$ for that system).}
-%     \label{tab:Udet_metal}
-%     \footnotesize
-%     \begin{tabular}{m{1.5cm} |
-%             d @{$\,\pm$}d |
-%             d @{$\,\pm$}d |
-%             d @{$\,\pm$}d
-%             d @{$\,\pm$}d}
-%         \hline
-%         \multicolumn{1}{c |}{\multirow{2}{*}{metal}}
-%          & \multicolumn{2}{c |}{scalar}
-%          & \multicolumn{2}{c |}{averaged $1\times1$}
-%          & \multicolumn{4}{c}{$1\times1$}            \\
-%          & \multicolumn{2}{c|}{$U$}
-%          & \multicolumn{2}{c|}{$U$}
-%          & \multicolumn{2}{c}{$U^\uparrow$}
-%          & \multicolumn{2}{c}{$U^\downarrow$}        \\
-%         \hline
-%         \input{tab_Udet_metal_truncated}
-%         \hline
-%         \input{tab_Udet_MnO_opium_metal_truncated}
-%         \hline
-%     \end{tabular}
-% \end{table}
-% 
-% Firstly, this spin-resolved approach yields Hubbard parameters are screened by the opposite spin channel (that is, by neglecting $\chi_{II\downarrow\uparrow}$ this response is absorbed into $U^{I\sigma}$). This typically resulted in smaller Hubbard parameters, especially for the low-spin aqua-Co\textsuperscript{3+}, where inter-spin-channel screening will be large.
-% 
-% Secondly, if the given spin channel has a small response (i.e. if it lies far from the Fermi level) then a small response results in a \emph{large} $U$! This is especailly noticeable in the values of $U^{\uparrow}$ for the late aqua-TMs.\footnote{We did't see the same effect for $U^\downarrow$ of the early aqua-TMs because $n^\downarrow$ never goes to zero for these systems, whereas $n^\uparrow$ reaches the maximum possible value for Mn\textsuperscript{2+} and heavier -- likely due to some projection-related subtleties. See Figure 4 of Ref.~\cite{Linscott2018} for details.} For copper it is even large and negative! We can explain this behaviour because in \cref{eqn:Usigma_as_curvature}, if we induce a slight change in the occupancy of this subspace it will bring about a very large change in the Hartree-plus-xc potential.
-% 
-% These large Hubbard parameters obviously have implications for quasiparticle energies, which will likely suffer.\footnote{You can see this in Table V of our paper, where the quasiparticle energies for the late aqua-TMs are grossly overestimated.} This should not come as too much of a surprise given that the Hubbard parameters were constructed without reference to quasiparticle energies.
-% 
-% N.B. this is no different from the behaviour one would get if we did conventional DFT\,+\,\emph{U} on a system with a completely filled or empty $3d$ subshell (e.g. ZnO). By separating the spin channels we have restricted things for ourselves even more, because we need to avoid systems where $n^\uparrow$ is not totally filled (and in principle $n^\downarrow$ not totally empty). This is obviously too restrictive to be of practical use.\footnote{That said, as we saw for the early aqua-TMs depending on the precise definition of our Hubbard projectors it might not be an issue}
-% 
-% \section{DFT\,+\,\emph{U}\,(+\,\emph{J})}
-% In order to inspire the design of functionals, it is worthwhile reviewing the properties of the conventional DFT\,+\,\emph{U}+\,\emph{J} functional \cite{Himmetoglu2011a,Himmetoglu2014a}:
-% %
-\begin{frame}
-    \begin{align}
-        E_{U} = & \sum_{I\sigma m m'} \frac{U^I}{2} \left(n^{I\sigma}_{mm'} (\delta_{m'm} - n^{I\sigma}_{m'm})\right) \label{eqn:u_correction}                              \\
-        E_{J} = & \sum_{I\sigma m m'} \frac{J^I}{2} \left( n^{I\sigma}_{mm'} n^{I-\sigma}_{m'm} - 2\delta_{\sigma \sigma_\mathrm{min}}\delta_{mm'} n^{I\sigma}_{m'm}\right)
-        \label{eqn:j_correction}
-    \end{align}
+\begin{frame}{DFT+\emph{U}}
+    \begin{align*}
+        E_\mathsf{U} = \sum_{I\sigma} \frac{U^I}{2}\Trace[\hat n^{I\sigma}(1-\hat n^{I\sigma})]
+    \end{align*}
+    %
+    \begin{align*}
+        \hat n^{I\sigma} = \hat P^I \hat \rho^\sigma \hat P^I = \sum_{i,j} \ket{\varphi^I_i}\bra{\varphi^I_i} \hat \rho^\sigma \ket{\varphi^I_j}\bra{\varphi^I_j}
+    \end{align*}
+    \begin{minipage}[t][0.5\paperheight][t]{\textwidth}
+        \only<2>{
+            \begin{center}
+                \begin{tabular}{ccccc}
+                    \includegraphics[trim=4cm 2cm 3cm 2cm, clip, width=0.16\textwidth]{figures/Mn3+_dxy.png} &
+                    \includegraphics[trim=4cm 2cm 3cm 2cm, clip, width=0.16\textwidth]{figures/Mn3+_dxz.png} &
+                    \includegraphics[trim=4cm 2cm 3cm 2cm, clip, width=0.16\textwidth]{figures/Mn3+_dyz.png} &
+                    \includegraphics[trim=4cm 2cm 3cm 2cm, clip, width=0.16\textwidth]{figures/Mn3+_dz2.png} &
+                    \includegraphics[trim=4cm 2cm 3cm 2cm, clip, width=0.16\textwidth]{figures/Mn3+_dx2-y2.png} \\
+                    $ \braket{\mathbf{r}}{\varphi^I_1} $                                                     &
+                    $ \braket{\mathbf{r}}{\varphi^I_2} $                                                     &
+                    $ \braket{\mathbf{r}}{\varphi^I_3} $                                                     &
+                    $ \braket{\mathbf{r}}{\varphi^I_4} $                                                     &
+                    $ \braket{\mathbf{r}}{\varphi^I_5} $
+                \end{tabular}
+            \end{center}
+        }
+        %
+        \only<3->{
+            \begin{align*}
+                \hat V_\mathsf{U} = \sum_{I\sigma ij}U^{I} \ket{\varphi^I_i}\left(\frac{1}{2}-n_{ij}^{I\sigma} \right) \bra{\varphi^I_j}
+            \end{align*}
+        }
+
+        \onslide<4->{\raggedleft ... but where does this come from?}
+    \end{minipage}
 \end{frame}
-% %
-% Now, let us consider the He\textsuperscript{$x+$} atom for $x = [0, 2]$, with a Hubbard correction applied to the $1s$ orbital.\footnote{Actually, all of the following is more general, and applies to any orbital that is an eigenvector of $n^\sigma_{mm'}$ for both spin channels.} The $+U$ correction to this subspace is pictured in \cref{fig:u_correction}. Note that\dots
-% 
 
-\begin{frame}{Rethinking inter-spin corrections: He$\textsuperscript{\emph{x}+}$}
 
+\begin{frame}{Time for a history lesson...}
+    Let's integrate the Hubbard model into the DFT framework!
+    \vspace{6pt}
+
+    \onslide<2->{
+        Start with an electron-electron interaction term...
+        %
+        \begin{equation*}
+            \hat U = \sum_{mnm'n'}\sum_{\sigma\sigma'}U_{mnm'n'}c^\dag_{m\sigma} c^\dag_{n\sigma'} c_{m'\sigma'} c_{n'\sigma},
+        \end{equation*}
+    }
+    \onslide<3->{We make various assumptions:
+        \begin{itemize}
+            \item ignore all but two-site interaction terms (\`a la Hubbard model)
+            \item neglect terms between opposite spin (likewise)
+            \item adopt a double-counting term % (fully localised limit, all subspaces with integer occupancy)
+            \item assume single-Slater-determinant wavefunction
+        \end{itemize}}
+
+    \onslide<4->{
+        ... and finish with a corrective term to DFT
+        %
+        \begin{align*}
+            E_{DFT+U}[\rho] = E_\mathsf{DFT}[\rho] + E_\mathsf{U}[\rho] = E_\mathsf{DFT}[\rho] + \sum_{I\sigma} \frac{U^I}{2}\Trace[\hat n^{I\sigma}(1-\hat n^{I\sigma})]
+            \label{eqn:EU3}
+        \end{align*}
+    }
+\end{frame}
+
+\begin{frame}{Time for a history lesson...}
+
+    \vspace{-3ex}
+    \begin{center}
+        \only<1>{\includegraphics[height=0.5\textheight]{figures/fig_en_curve_dftu_without_correction.pdf}}
+        \only<2->{
+            \includegraphics[height=0.5\textheight]{figures/fig_en_curve_dftu_correction.pdf}}
+    \end{center}
+
+    \small
+    A modern (post hoc) interpretation:
+    in a basis such that $\hat n^{I\sigma} =diag(\lambda^{I\sigma}_1, ... ,\lambda^{I\sigma}_n)$
+    \begin{align*}
+        E_\mathsf{U} = \sum_{I\sigma} \frac{U^I}{2}\Trace[\hat n^{I\sigma}(1-\hat n^{I\sigma})]
+        = \sum_{I\sigma} \frac{U^I}{2}\sum_i \lambda^{I\sigma}_i (1-\lambda^{I\sigma}_i)
+    \end{align*}
+    % \begin{center}
+    %    \onslide<3->{\includegraphics[height=0.4\paperheight]{../figures/fig_En_theory.pdf}} 
+    % \end{center}
+    \onslide<3->{We can calculate $U$ via linear response $\rightarrow$ ``self-correcting'' DFT}
+    \blfootcite{Cococcioni2005a}
+\end{frame}
+
+\begin{frame}{Time for a history lesson...}
+    What about DFT$+U+J$?
+
+    \onslide<2->{
+
+        \vspace{6pt}
+
+        Start with an electron-electron interaction term...
+        %
+        \begin{equation*}
+            \hat U = \sum_{mnm'n'}\sum_{\sigma\sigma'}U_{mnm'n'}c^\dag_{m\sigma} c^\dag_{n\sigma'} c_{m'\sigma'} c_{n'\sigma},
+        \end{equation*}
+
+        We make various assumptions:
+        \begin{itemize}
+            \item ignore all but two-site interaction terms (\`a la Hubbard model)
+            \item \only<3->{\sout}{neglect terms between opposite spin (likewise)}
+            \item adopt a double-counting term % (fully localised limit, all subspaces with integer occupancy)
+            \item assume single-Slater-determinant wavefunction
+        \end{itemize}
+
+        ... and finish with a corrective term to DFT
+        %
+        \onslide<4->{
+        \begin{align*}
+            E_{DFT+U+J}[\rho] = E_\mathsf{DFT}[\rho] + \sum_{I\sigma} \frac{U^I-J^I}{2}\Trace[\hat n^{I\sigma}(1-\hat n^{I\sigma})]
+            + \sum_{I\sigma} \frac{J^I}{2} \Trace[\hat n^{I\sigma} \hat n^{I-\sigma} - 2\delta_{\sigma \sigma_\mathsf{min}} n^{I\sigma}]
+            \label{eqn:EU3}
+        \end{align*}
+        }
+    }
+
+\end{frame}
+
+\begin{frame}{Time for a history lesson...}
+
+    A modern interpretation of $+J$ was never concretely attempted. From Himmetoglu (2011):
+
+    \vspace{6pt}
+
+    \begin{center}
+        \begin{tikzpicture}
+            \path [fill overzoom image=figures/himmetoglu2011_quote.png, path fading=fade bottom] (0,0) rectangle (0.5\textwidth, 0.213\textwidth);
+        \end{tikzpicture}
+    \end{center}
+
+    \onslide<2->{
+    What is the analogue of piecewise linearity?
+    }
+    
+    \onslide<3->{
+    \begin{center}
+        \textbf{Static correlation error (SCE)}
+        \\
+        energy should be piecewise linear with respect to magnetisation
+    \end{center}
+    }
+
+    \blfootcite{Himmetoglu2011a}
+
+\end{frame}
+
+\begin{frame}{SIE and SCE in He\textsuperscript{x+}}
     \renewcommand{\figurename}{}
-    \vspace{-2ex}
     \begin{columns}
-        \column{0.35\linewidth}
 
-        \begin{figure}
-            \includegraphics[width=\columnwidth]{figures/fig_bajaj_2d_pwl.jpeg}
-            \caption{PBE error}
-        \end{figure}
-
-        \column{0.3\linewidth}
+        \column{0.45\linewidth}
         \begin{figure}[h!]
             \includegraphics[width=\columnwidth]{figures/fig_bajaj_abstracted_2d_pwl.jpg}
             \caption{the flat plane}
         \end{figure}
 
-        \vspace{-6ex}
+        \column{0.4\linewidth}
         \begin{figure}
-            \includegraphics[width=\columnwidth]{figures/u_correction_with_paths.pdf}
-            \caption{the $+U$ correction}
-        \end{figure}
-
-        \column{0.3\linewidth}
-
-        \begin{figure}
-            \includegraphics[width=\columnwidth]{figures/fig_bajaj_u_worsens_sce.jpeg}
-            \caption{error along $n = 1$}
-        \end{figure}
-
-        \vspace{-6ex}
-        \begin{figure}
-            \includegraphics[width=\columnwidth]{figures/j_correction.pdf}
-            \caption{the $+J$ correction}
+            \includegraphics[width=\columnwidth]{figures/fig_bajaj_2d_pwl.jpeg}
+            \caption{PBE error}
         \end{figure}
 
     \end{columns}
-
-    \vspace{-2ex}
     \blfootcite{Bajaj2017}
+
 \end{frame}
+
+\begin{frame}{SIE and SCE in He\textsuperscript{x+}}
+
+    ... Does DFT + \emph{U} + \emph{J} correct SIE and SCE?
+
+    \begin{overlayarea}{\textwidth}{0.8\textheight}
+    \begin{center}
+        \only<2>{
+        \includegraphics[width=0.5\textwidth]{figures/fig_en_curve_dftu_correction.pdf}
+
+        \textbf{\textcolor{seaborn_green}{semi-local DFT} + \textcolor{seaborn_red}{U correction} = \textcolor{seaborn_blue}{piecewise linear}}
+        }
+
+        \only<3->{
+       
+        \includegraphics[width=0.4\textwidth]{figures/fig_bajaj_2d_pwl.jpeg}
+
+            \textbf{U + J correction $\mathbf{\stackrel{?}{=}}$ flat plane $\mathbf{-}$ semi-local}
+        }
+        
+    \end{center}
+    \end{overlayarea}
+    
+\end{frame}
+% \begin{frame}{The state of play}
+%     \begin{align*}
+%         E_{U} = & \sum_{I\sigma m m'} \frac{U^I}{2} \left(n^{I\sigma}_{mm'} (\delta_{m'm} - n^{I\sigma}_{m'm})\right) \label{eqn:u_correction}                              \\
+%         E_{J} = & \sum_{I\sigma m m'} \frac{J^I}{2} \left( n^{I\sigma}_{mm'} n^{I-\sigma}_{m'm} - 2\delta_{\sigma \sigma_\mathrm{min}}\delta_{mm'} n^{I\sigma}_{m'm}\right)
+%     \end{align*}
+% \end{frame}
 
 \begin{frame}{The +\,\emph{U} correction}
     \begin{columns}
-        \column{0.6\linewidth}
+        \column{0.5\linewidth}
         \begin{figure}[h!]
-            \includegraphics[width=\columnwidth]{figures/u_correction_with_paths.pdf}
-            \caption{$E_{U}(n^\uparrow,n^\downarrow)$}
-            \label{fig:u_correction_with_paths}
+            \only<1>{
+                \includegraphics[width=0.8\columnwidth]{figures/u_correction_with_paths.pdf}
+                \caption{$E_{U}(n^\uparrow,n^\downarrow)$}
+            }
+            \only<2>{
+                \includegraphics[width=\columnwidth]{figures/fig_bajaj_u_worsens_sce.jpeg}
+                \caption{He\textsuperscript{x+} (He\textsuperscript{+} to He on left; He\textsuperscript{+} on right)}
+            }
         \end{figure}
-        \column{0.35\linewidth}
+        \column{0.4\linewidth}
         \small
         \begin{subequations}
-            \begin{align}
+            \begin{align*}
                 \left.\frac{\partial^2E_{U}}{\partial n^{\uparrow 2}}\right|_{n^\downarrow} & = -U \qquad \text{(red)}             \\
                 \left.\frac{\partial^2E_{U}}{\partial n^{\downarrow 2}}\right|_{n^\uparrow} & = -U \qquad \text{(green)}           \\
                 \left.\frac{\partial^2E_{U}}{\partial n^2}\right|_{\mu}                     & = -\frac{U}{2} \qquad \text{(blue)}  \\
                 \left.\frac{\partial^2E_{U}}{\partial \mu^2 }\right|_{n}                    & = -\frac{U}{2} \qquad \text{(black)}
-            \end{align}
+            \end{align*}
         \end{subequations}
     \end{columns}
     %
+    \blfootcite{Bajaj2017}
 \end{frame}
 % % 
 % % The $+U$ correction introduces a spin-symmetric curvature with respect to $n^\sigma$, but also adds curvature with respect to $\mu$. For semi-local functionals $\frac{d^2E}{d\mu^2}$ is already erroneously \emph{concave}, and thus $+U$ corrections worsen static correlation error \cite{Bajaj2017}.
@@ -586,7 +622,7 @@
     \begin{columns}
         \column{0.6\linewidth}
         \begin{figure}[h!]
-            \includegraphics[width=\columnwidth]{figures/j_correction.pdf}
+            \includegraphics[width=0.7\columnwidth]{figures/j_correction.pdf}
             \caption{$E_{J}(n^\uparrow,n^\downarrow)$}
             \label{fig:j_correction}
         \end{figure}
@@ -594,13 +630,15 @@
         %
         \footnotesize
         \begin{subequations}
-            \begin{align}
+            \begin{align*}
                 \left.\frac{\partial^2E_{J}}{\partial n^2}\right|_{\mu}                     & = \frac{J}{2}                                 \\
                 \left.\frac{\partial^2E_{J}}{\partial\mu^2}\right|_{n}                      & = -\frac{J}{2} \qquad \text{ for } \mu \neq 0 \\
                 \left.\frac{\partial^2E_{J}}{\partial n^{\uparrow 2}}\right|_{n^\downarrow} & = 0                                           \\
                 \left.\frac{\partial^2E_{J}}{\partial n^{\downarrow 2}}\right|_{n^\uparrow} & = 0
-            \end{align}
+            \end{align*}
         \end{subequations}
+
+        Not even the right shape!
     \end{columns}
 \end{frame}
 % % 
@@ -637,25 +675,25 @@
     \footnotesize
     \begin{columns}
         \column{0.45\linewidth}
-        $U_\mathrm{eff} = U - J$:
+        $U_\mathsf{eff} = U - J$:
         \begin{subequations}
-            \begin{align}
-                \left.\frac{\partial^2}{\partial n^2}\right|_{\mu} (E_{U_\mathrm{eff}} + E_J)                     & = -\frac{U-2J}{2}                            \nonumber  \\
-                \left.\frac{\partial^2}{\partial \mu^2}\right|_{n} (E_{U_\mathrm{eff}} + E_J)                     & = -\frac{U}{2} \qquad \text{ for } \mu \neq 0 \nonumber \\
-                \left.\frac{\partial^2}{\partial n^{\uparrow 2}}\right|_{n^\downarrow} (E_{U_\mathrm{eff}} + E_J) & = -(U - J) \qquad \text{ for } \mu \neq 0     \nonumber \\
-                \left.\frac{\partial^2}{\partial n^{\downarrow 2}}\right|_{n^\uparrow} (E_{U_\mathrm{eff}} + E_J) & = -(U - J) \qquad \text{ for } \mu \neq 0\nonumber
-            \end{align}
+            \begin{align*}
+                \left.\frac{\partial^2}{\partial n^2}\right|_{\mu} (E_{U_\mathsf{eff}} + E_J)                     & = -\frac{U-2J}{2}                            \nonumber  \\
+                \left.\frac{\partial^2}{\partial \mu^2}\right|_{n} (E_{U_\mathsf{eff}} + E_J)                     & = -\frac{U}{2} \qquad \text{ for } \mu \neq 0 \nonumber \\
+                \left.\frac{\partial^2}{\partial n^{\uparrow 2}}\right|_{n^\downarrow} (E_{U_\mathsf{eff}} + E_J) & = -(U - J) \qquad \text{ for } \mu \neq 0     \nonumber \\
+                \left.\frac{\partial^2}{\partial n^{\downarrow 2}}\right|_{n^\uparrow} (E_{U_\mathsf{eff}} + E_J) & = -(U - J) \qquad \text{ for } \mu \neq 0\nonumber
+            \end{align*}
             \label{eqn:2nd_derivatives_ueff_plus_j}
         \end{subequations}
         \column{0.45\linewidth}
-        $U_\mathrm{eff} = U$:
+        $U_\mathsf{eff} = U$:
         \begin{subequations}
-            \begin{align}
+            \begin{align*}
                 \left.\frac{\partial^2}{\partial n^2}\right|_{\mu} (E_{U} + E_J)                     & = -\frac{U-J}{2}                                \nonumber \\
                 \left.\frac{\partial^2}{\partial \mu^2}\right|_{n} (E_{U} + E_J)                     & = -\frac{U+J}{2} \qquad \text{ for } \mu \neq 0 \nonumber \\
                 \left.\frac{\partial^2}{\partial n^{\uparrow 2}}\right|_{n^\downarrow} (E_{U} + E_J) & = -U \qquad \text{ for } \mu \neq 0             \nonumber \\
                 \left.\frac{\partial^2}{\partial n^{\downarrow 2}}\right|_{n^\uparrow} (E_{U} + E_J) & = -U \qquad \text{ for } \mu \neq 0\nonumber
-            \end{align}%
+            \end{align*}%
             \label{eqn:2nd_derivatives_u_plus_j}%
         \end{subequations}%
     \end{columns}
@@ -698,24 +736,23 @@
 % \noindent The goal of this work is to devise a new Hubbard-like correction to address self-interaction error (SIE) and static correlation error (SCE). At this point there are several philosophical choices one can make. Based on our above study of the DFT\,+\,$U$\,+\,$J$ here are the properties I would like my functional to possess:
 % 
 \begin{frame}{Rethinking inter-spin corrections}
-    \begin{align}
-        E_{U} = & \sum_{I\sigma m m'} \frac{U^I}{2} \left(n^{I\sigma}_{mm'} (\delta_{m'm} - n^{I\sigma}_{m'm})\right) \label{eqn:u_correction}                              \\
-        E_{J} = & \sum_{I\sigma m m'} \frac{J^I}{2} \left( n^{I\sigma}_{mm'} n^{I-\sigma}_{m'm} - 2\delta_{\sigma \sigma_\mathrm{min}}\delta_{mm'} n^{I\sigma}_{m'm}\right)
+    \begin{align*}
+        E_{U} = & \sum_{I\sigma m m'} \frac{U^I}{2} \left(n^{I\sigma}_{mm'} (\delta_{m'm} - n^{I\sigma}_{m'm})\right)                                                       \\
+        E_{J} = & \sum_{I\sigma m m'} \frac{J^I}{2} \left( n^{I\sigma}_{mm'} n^{I-\sigma}_{m'm} - 2\delta_{\sigma \sigma_\mathsf{min}}\delta_{mm'} n^{I\sigma}_{m'm}\right)
         \label{eqn:j_correction}
-    \end{align}
+    \end{align*}
     Observations on conventional DFT\,+\,$U$ and DFT\,+\,$U$\,+\,$J$
     \begin{itemize}
         \item the correction is not the right shape
         \item lots of inter-dependence
-        \item $U^I$ not $U^I_\mathrm{eff} = U^I - J^I$
-        \item minority $J$ term is important
+        \item (minority $J$ term is important)
     \end{itemize}
 
-    Principles for designing a new correction
+    Principles for designing a new Hubbard-like correction (i.e. quadratic in $\hat n$)
     \begin{enumerate}
-        \item vanishing at integer occupancies
         \item decouple our treatment of SIE and SCE
-        \item different $U$ correction for each spin channel
+        \item vanishing at integer occupancies
+        \item be continuous
     \end{enumerate}
 \end{frame}
 % %
@@ -726,16 +763,14 @@
 % Here is my first proposed energy correction for our \emph{1s} system, first attempting to address self-interaction error:
 % 
 \begin{frame}{Correction to SIE}
-    \begin{equation}
+    \begin{equation*}
         % E_1(\{U^\sigma\}, \{n^\sigma\}) = \sum_\sigma \frac{U^\sigma}{4} \left(|\tilde n| + \tilde n(1 - 2n^\sigma)\right)
-        E_1(\{U^\sigma\}, \{n^\sigma\}) =
         \sum_\sigma \frac{U^\sigma}{2} \left(n^\uparrow + n^\downarrow - 1\right) \times
         \begin{cases}
             -n^\sigma    & n < 1 \\
             1 - n^\sigma & n > 1
         \end{cases}
-        \label{eqn:novel_u_correction}
-    \end{equation}
+    \end{equation*}
     %
     \begin{figure}[t!]
         \begin{subfigure}[b]{0.4\columnwidth}
@@ -761,18 +796,18 @@
         \begin{enumerate}
             \item it is zero for integer numbers of electrons
             \item the curvature with respect to $n^\sigma$ is entirely controlled by $U^\sigma$, i.e.
-                  \begin{equation}
+                  \begin{equation*}
                       \left.\frac{\partial^2 E_1}{\partial n^{\sigma 2}}\right|_{n^{-\sigma}} = - U^\sigma
-                  \end{equation}
+                  \end{equation*}
             \item the curvature with respect to $\mu$ is \emph{untouched} by this correction
-                  \begin{equation}
+                  \begin{equation*}
                       \left.\frac{\partial^2 E_1}{\partial \mu^{2}}\right|_{n} = 0
-                  \end{equation}
+                  \end{equation*}
                   which would imply that this correction will selectively address SIE and not SCE
             \item the curvature with respect to the total occupancy $n = n^\uparrow + n^\downarrow$ is given by the average
-                  \begin{equation}
+                  \begin{equation*}
                       \left.\frac{\partial^2 E_1}{\partial n^{2}}\right|_{\mu} = -\frac{U^\uparrow + U^\downarrow}{2}
-                  \end{equation}
+                  \end{equation*}
                   % I would argue that this curvature is less important (after all, derivatives with respect to $n^\sigma$ not $n$ give rise to the eigenenergies $\varepsilon^\sigma$) but nevertheless it is comforting that this second derivative is (a) constant everywhere and (b) is an intuitive value
         \end{enumerate}
     \end{columns}
@@ -783,41 +818,6 @@
 % % % In order to generalise \cref{eqn:novel_u_correction} to a multi-orbital Hubbard site, I imagine the path forward is to work with the set of orbitals that diagonalise $n_{mm'}$, but I need to give this more thought as there are some subtleties.\footnote{e.g. $n_{mm'}$, $n_{mm'}^\uparrow$, and $n_{mm'}^\downarrow$ will diagonalised by different sets of orbitals}
 % % %If $\{\ket{\varphi_i}\}$ is the set of orbitals that diagonalise $n_{mm'}$ then
 % % 
-\begin{frame}{Correction to SIE}
-    The resulting potential from this energy correction is given by $\hat v^\sigma_1 = v^\sigma_1(n^\uparrow_i, n^\downarrow_i) \ket{i}\bra{i}$ where
-    %
-    \begin{align}
-        v^\sigma_1(n^\uparrow, n^\downarrow)
-        % = -\frac{\tilde n U^\sigma}{2} + \sum_{\sigma'} \frac{U^{\sigma'}}{4} \left[\frac{|\tilde n|}{\tilde n} + 1 - 2n^{\sigma'}\right]
-        = &
-        \begin{cases}
-            U^\sigma\left(\frac{1}{2} - n^\sigma\right)
-            + \left(1 - n^{-\sigma}\right)
-            \frac{U^\uparrow + U^\downarrow}{2}
-             & n > 1
-            \\
-            U^\sigma\left(\frac{1}{2} - n^\sigma\right)
-            - n^{-\sigma}
-            \frac{U^\uparrow + U^\downarrow}{2}
-             & n < 1
-        \end{cases}
-        \label{eqn:novel_u_potential}
-    \end{align}
-    \begin{figure}[t!]
-        \begin{subfigure}[b]{0.3\columnwidth}
-            \includegraphics[width=\columnwidth]{figures/novel_u_potential.pdf}
-            \caption{}
-            \label{fig:novel_u_potential}
-        \end{subfigure}
-        \begin{subfigure}[b]{0.3\columnwidth}
-            \includegraphics[width=\columnwidth]{figures/novel_u_potential_2d.pdf}
-            \caption{}
-            \label{fig:novel_u_potential_2d}
-        \end{subfigure}
-        \caption{my proposed potential correction $v^\uparrow_1(\{U^\sigma\}, \{n^\sigma\})$ for addressing SIE, with $U^\downarrow = 2 U^\uparrow$}
-    \end{figure}
-
-\end{frame}
 % % %
 % % This is plotted in \cref{fig:novel_u_potential,fig:novel_u_potential_2d}. The first term in this correction is very familiar -- it is simply the conventional +\emph{U} potential $\hat v = \sum_{i\sigma} U (\frac{1}{2} - n^\sigma_i)\ket{i}\bra{i}$ with a spin-dependent $U$! The second term is novel.
 % % 
@@ -826,16 +826,16 @@
 % % %
 \begin{frame}{Correction to SCE}
     \vspace{-1em}
-    \begin{equation}
-        E_2(K, \{n^\sigma\}) % = & \frac{K}{4}\left[(n^\uparrow-n^\downarrow)^2-(|\tilde n|-1)^2\right] \nonumber \\
+    \begin{equation*}
+        % E_2(J, \{n^\sigma\}) % = & \frac{K}{4}\left[(n^\uparrow-n^\downarrow)^2-(|\tilde n|-1)^2\right] \nonumber \\
         % = & \frac{K}{4}\left[(n^\uparrow)^2 - 2n^\uparrow n^\downarrow + (n^\downarrow)^2-(n^\uparrow + n^\downarrow - 1)^2 + 2(|n^\uparrow + n^\downarrow - 1|) -1)\right] \nonumber \\
         % = & \frac{K}{2}\left[- 2 n^\uparrow n^\downarrow + n^\uparrow + n^\downarrow - 1 + (|n^\uparrow + n^\downarrow - 1|)\right] \nonumber \\
-        = \begin{cases}
-            - Kn^\uparrow n^\downarrow            & n < 1 \\
-            - K(1 - n^\uparrow)(1 - n^\downarrow) & n > 1
+        \begin{cases}
+            - Jn^\uparrow n^\downarrow            & n < 1 \\
+            - J(1 - n^\uparrow)(1 - n^\downarrow) & n > 1
         \end{cases}
         \label{eqn:novel_k_correction}
-    \end{equation}
+    \end{equation*}
     % %
     % where I have chosen to parametrise this correction with the parameter $K$ rather than $J$ to try and avoid any connection with ideas associated with exchange coupling mechanisms; at the end of the day, this is an empirical correction to the energy curvature due to SCE, not a Hamiltonian embedded within DFT.
     % 
@@ -844,7 +844,7 @@
     \vspace{-1em}
     \begin{figure}[t!]
         \includegraphics[width=0.5\columnwidth]{figures/novel_k_correction.pdf}
-        \caption{My proposed second correction, $E_2(K, \{n^\sigma\})$ for addressing SCE, with $K = 1$}
+        %\caption{My proposed second correction, $E_2(K, \{n^\sigma\})$ for addressing SCE, with $K = 1$}
         \label{fig:novel_k_correction}
     \end{figure}
 \end{frame}
@@ -859,22 +859,22 @@
         This second energy correction term possesses the following important properties:
         %
         \begin{enumerate}
-            \item it is zero for integer numbers of electrons (the four corners of \cref{fig:novel_k_correction})
-            \item the curvature with respect to $\mu$ is controlled by the parameter $K$
-                  \begin{equation}
-                      \left.\frac{\partial^2 E_2}{\partial \mu^{2}}\right|_{n} = \frac{K}{2}
-                  \end{equation}
+            \item it is zero for integer numbers of electrons
+            \item the curvature with respect to $\mu$ is controlled by the parameter $J$
+                  \begin{equation*}
+                      \left.\frac{\partial^2 E_2}{\partial \mu^{2}}\right|_{n} = \frac{J}{2}
+                  \end{equation*}
             \item the curvature with respect to $n^\sigma$ is zero
-                  \begin{equation}
+                  \begin{equation*}
                       \left.\frac{\partial^2 E_2}{\partial n^{\sigma 2}}\right|_{n^{-\sigma}} = 0
-                  \end{equation}
+                  \end{equation*}
         \end{enumerate}
         %
-        However, by fulfilling these three properties it necessarily possesses one undesirable property: namely, the curvature with respect to the total occupancy $n = n^\uparrow + n^\downarrow$ is given by
-        %
-        \begin{equation}
-            \left.\frac{\partial^2 E_2}{\partial n^{2}}\right|_{\mu} = -\frac{K}{2}
-        \end{equation}
+        % However, by fulfilling these three properties it necessarily possesses one undesirable property: namely, the curvature with respect to the total occupancy $n = n^\uparrow + n^\downarrow$ is given by
+        % %
+        % \begin{equation}
+        %     \left.\frac{\partial^2 E_2}{\partial n^{2}}\right|_{\mu} = -\frac{J}{2}
+        % \end{equation}
     \end{columns}
 \end{frame}
 % % %
@@ -912,41 +912,81 @@
         \centering
         \begin{subfigure}[b]{0.4\columnwidth}
             \includegraphics[width=\columnwidth]{figures/novel_u_correction.pdf}
-            \caption{$E_1$ with $U^\uparrow = U^\downarrow/2$}
         \end{subfigure}
+        \raisebox{2cm}{\huge +}
         \begin{subfigure}[b]{0.4\columnwidth}
             \includegraphics[width=\columnwidth]{figures/novel_k_correction.pdf}
-            \caption{$E_2$}
         \end{subfigure}
     \end{figure}
-    \begin{equation}
-        v^\sigma(n^\uparrow, n^\downarrow) =
-        \begin{cases}
-            {U^\sigma}
-            \left(\frac{1}{2} - n^\sigma\right)
-            +
-            \left(
-            1 - n^{-\sigma}
-            \right)
-            \left(
-            \frac{U^\uparrow + U^\downarrow}{2}
-            +K
-            \right)
-             & n > 1 \\
-            U^\sigma
-            \left(
-            \frac{1}{2}
-            -n^{\sigma}
-            \right)
-            - n^{-\sigma}
-            \left(
-            \frac{U^\uparrow + U^\downarrow}{2}
-            + K
-            \right)
-             & n < 1
-        \end{cases}
-        \label{eqn:the_combined_potential}
-    \end{equation}
+
+    \footnotesize
+    \begin{equation*}
+        E_{\mathsf{BLOR}}=\left\{\begin{array}{cc}
+            \sum_{\sigma m m^{\prime}} \frac{U^\sigma}{2} n_{m m^\sigma}^\sigma \delta_{m m^{\prime}}-\frac{U^\sigma}{2} n_{m m^{\prime}}^\sigma n_{m^{\prime} m}^\sigma-\frac{U^\sigma+2 J}{2} n_{m m^{\prime}}^\sigma n_{m^{\prime} m}^{\bar{\sigma}},                                                                  & N \leqslant 2 l+1 \\
+            \sum_{\sigma m m^{\prime}}\left(U^\sigma+\frac{U^{\bar{\sigma}}}{2}+2 J\right) n_{m m^{\prime}}^\sigma \delta_{m m^{\prime}}-\frac{U^\sigma}{2} n_{m m^{\prime}}^\sigma n_{m^{\prime} m}^\sigma-\frac{U^\sigma+2 J}{2} n_{m m^{\prime}}^\sigma n_{m^{\prime} m}^{\bar{\sigma}}-\frac{U^\sigma+2 J}{2(2 l+1)}, & N>2 l+1
+        \end{array}\right.
+    \end{equation*}
+    % \begin{equation}
+    %     v^\sigma(n^\uparrow, n^\downarrow) =
+    %     \begin{cases}
+    %         {U^\sigma}
+    %         \left(\frac{1}{2} - n^\sigma\right)
+    %         +
+    %         \left(
+    %         1 - n^{-\sigma}
+    %         \right)
+    %         \left(
+    %         \frac{U^\uparrow + U^\downarrow}{2}
+    %         +K
+    %         \right)
+    %          & n > 1 \\
+    %         U^\sigma
+    %         \left(
+    %         \frac{1}{2}
+    %         -n^{\sigma}
+    %         \right)
+    %         - n^{-\sigma}
+    %         \left(
+    %         \frac{U^\uparrow + U^\downarrow}{2}
+    %         + K
+    %         \right)
+    %          & n < 1
+    %     \end{cases}
+    %     \label{eqn:the_combined_potential}
+    % \end{equation}
+\end{frame}
+
+\begin{frame}{What's in a name?}
+    \begin{center}
+        \huge BLOR
+    \end{center}
+    \begin{center}
+        \footnotesize
+        \begin{tabularx}{0.7\textwidth}{CCC}
+            \includegraphics[height = 0.4\paperheight]{photos/andrew_burgess.png} &
+            \includegraphics[height = 0.4\paperheight]{photos/linscott.jpg}       &
+            \includegraphics[height = 0.4\paperheight]{figures/david_oregan.jpg}    \\
+            % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
+            % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
+            Andrew \only<2->{\textbf}{B}urgess                                    &
+            Edward \only<2->{\textbf}{L}inscott                                   &
+            David \only<2->{\textbf}{O}'\only<2->{\textbf}{R}egan                   \\
+        \end{tabularx}
+    \end{center}
+
+    \onslide<3->{Initially was going to be ``BLR22'' but...}
+\end{frame}
+
+\begin{frame}{What's in a name?}
+    \centering
+    \only<1-2>{
+        \begin{tikzpicture}
+            \only<1>{\node[anchor=center] at (0,0) {\includegraphics[width=0.9\textwidth]{figures/blr22.png}}};
+            \only<2>{\node[opacity=0.3, anchor=center] at (0,0) {\includegraphics[width=0.9\textwidth]{figures/blr22.png}}};
+            \only<2->{\node[anchor=center] at (0,0) {\Large when naming something, ALWAYS Google it first!}};
+        \end{tikzpicture}
+    }
+
 \end{frame}
 % %
 % \Cref{eqn:the_combined_potential} is one of the main results of this work. The first term is the familiar conventional +\emph{U} potential with a spin-dependent $U$. The second term is less familiar. It introduces a $n^{-\sigma}$-dependent shift with a discontinuity across $n = 1$ of magnitude
@@ -964,399 +1004,149 @@
 % I worry that this discontinuity will lead to strange behaviour and thereby render my correction unusable. 
 % 
 % \section{Determining $U^\sigma$ and $K$ via linear response}
-\begin{frame}{Determining $U^\sigma$ and $K$ via spin-resolved LR}
-    % For these functionals, we want to be able to appropriately determine $U^\uparrow$, $U^\downarrow$, and $K$ via linear response, from the spin-resolved response matrices $\chi_{II}^{\sigma\sigma'}$ and $(\chi_0)_{II}^{\sigma\sigma'}$ and the resulting quantity
-    % %
-    % \begin{equation}
-    %     f^{\sigma\sigma'}_{II} = \left((\chi_{0II})^{-1} - (\chi_{II})^{-1}\right)^{\sigma\sigma'}
-    % \end{equation}
-    % %
-    % where note that we are inverting separately the block matrices $\chi_{II}$ rather than inverting the entire matrix $\chi$ and then focusing on the block corresponding to Hubbard site $I$. Because in this way we have entirely decoupled Hubbard sites, I will from now on drop the Hubbard site indices.
-    % 
-    % In order to relate the parameters $U^\sigma$ and $K$ to the elements of $f^{\sigma \sigma'}$ it is necessary to compute some derivatives. These are computed in \cref{sec:derivatives}; to summarise the results of that appendix
-    % %
-    \begin{equation}
-        \left.\frac{\partial ^2}{\partial n^{\sigma 2}} \left(E_1 + E_2\right) \right|_{n^{-\sigma}} = -U^\sigma
-    \end{equation}
+\begin{frame}{Determining $U^\sigma$ and $J$ via spin-resolved LR}
+
+    Scalar (conventional) approach:
+    \begin{align*}
+        \chi_{IJ} = & \frac{d n^I}{d v^J_\mathsf{ext}}\qquad \hat v^J_\mathsf{ext} = v_\mathsf{ext} \hat P^J
+    \end{align*}
     %
-    and thus it follows that we should set $U^\sigma = U^{\sigma\sigma}$. Meanwhile, the mixed derivatives
-    %
-    \begin{align}
-        \left.\frac{\partial }{\partial n^{\sigma}}\left[\left.\frac{\partial }{\partial n^{-\sigma}} \left(E_1 + E_2\right) \right|_{n^{\sigma}}\right]\right|_{n^{-\sigma}}
-        = -\frac{U^\uparrow + U^\downarrow + K}{2}
-    \end{align}
-    %
-    and thus by equating the LHS with $-\frac{1}{2}(U^{\uparrow\downarrow} + U^{\downarrow \uparrow})$ it follows that $K = - U^{\uparrow\uparrow} + U^{\uparrow\downarrow} + U^{\downarrow\uparrow} - U^{\downarrow\downarrow}$
+
+    Spin-resolved approach\footcite{Linscott2018}:
+    \begin{align*}
+        \chi_{IJ\sigma\sigma'} = & \frac{d n^{I\sigma}}{d v^{J\sigma'}_\mathsf{ext}}\qquad \hat v^{J\sigma}_\mathsf{ext} = \delta_{\sigma \sigma'} v^{\sigma'}_\mathsf{ext} \hat P^J
+    \end{align*}
+
+    Allows us to construct perturbations while holding variables constant without a headache e.g. $\left.\frac{d}{dn^\uparrow}\right|_{n^\downarrow}$
+
 \end{frame}
-% % 
-% % Note to self: might be out by a factor of 2 here and there...
-% % 
-% % \section{Generalisation to multi-orbital Hubbard subspaces}
-% % Thus far I have only presented corrections that can be applied to a \emph{1s} Hubbard subspace. In order for these corrections to be generally applicable, they must be generalised to multi-orbital Hubbard subspaces.
-% % 
-% % The approach for this generalisation would be to look for a matrix representation of our corrections that, in the basis of functions that diagonalise $n$, reduce down to applying the corrections \cref{eqn:novel_u_correction,eqn:novel_k_correction} to the eigenvalues of $n$.
-% % 
-% % In conventional DFT\,+\,\emph{U} this is straightforward: we have a one-site correction like $\sum_{i\sigma} \lambda^\sigma_i(1 - \lambda^\sigma_i) = \sum_{i\sigma} \trace{\mathbf{n}^\sigma(1 - \mathbf{n}^\sigma)}$ where we have taken advantage of the fact that the trace of a matrix is invariant under basis transformations to obtain a rotationally-invariant formulation.
-% % 
-% % However, my novel corrections include terms like $\sum_i |\lambda^\sigma_i + \lambda^\sigma_i - 1|$. These terms cannot be reduced to matrix traces. Therefore in order to evaluate them we must explicitly diagonalise $\mathbf{n}$.
-% % 
-% % \section{Application to C\lowercase{r}I\textsubscript{3} (WIP)}
-% \begin{frame}{Application to C\lowercase{r}I\textsubscript{3} (WIP)}
-%     % For CrI\textsubscript{3}, we performed spin-polarised DFPT calculations, and obtained the following response matrices:
-%     % %
-%     % \begin{align}
-%     %     \chi^{\sigma\sigma'} = 
-%     %     \begin{pmatrix}
-%     %     -0.192107 & 0.140612 \\
-%     %     0.140612 & -0.213558
-%     %     \end{pmatrix};
-%     %     \qquad
-%     %     \chi_0^{\sigma\sigma'} = 
-%     %     \begin{pmatrix}
-%     %     -0.285342 & 0.0 \\
-%     %     0.0 & -0.225989
-%     %     \end{pmatrix}
-%     % \end{align}
-%     % %
-%     % It follows that
-%     % %
-%     % \begin{align}
-%     %     f^{\sigma\sigma'}
-%     %     = \left(\chi_0^{-1} - \chi^{-1}\right)_{\sigma\sigma'}
-%     %     =
-%     %     \begin{pmatrix}
-%     %         6.54321121 & 6.61571148 \\
-%     %         6.61571148 & 4.61352665
-%     %     \end{pmatrix}
-%     %     _{\sigma\sigma'}
-%     % \end{align}
-%     % %
-%     % from which we can extract the parameters $U^\uparrow = 6.54$ eV, $U^\downarrow = 4.61$ eV, and $K = 2.07$ eV.
-%     $U^\uparrow = 6.54$ eV, $U^\downarrow = 4.61$ eV, and $K = 2.07$ eV.
-% 
-%     At the PBE level, the eigenvalues of $\mathbf{n}^\sigma$ are given by three orbitals with spin-resolved occupancy $(0.971, 0.065)$ and two with occupancy $(0.472, 0.245)$. Suppose we have a KS state that lies entirely in the subspace spanned by the three degenerate orbitals. Then
-%     %
-%     \begin{equation}
-%         v^\sigma(0.971, 0.065) =
-%         U^\sigma
-%         \left(
-%         \frac{1}{2}
-%         -n^{\sigma}
-%         \right)
-%         +
-%         \left(
-%         1
-%         - n^{-\sigma}
-%         \right)
-%         \left(
-%         \frac{U^\uparrow + U^\downarrow}{2}
-%         +K
-%         \right)
-%         =
-%         \begin{cases}
-%             4.07 & \sigma = \uparrow   \\
-%             2.23 & \sigma = \downarrow
-%         \end{cases}
-%     \end{equation}
-%     %
-%     % This appears strange; in the typical picture we expect the potential for a filled orbital to be negative and an empty orbital, positive. Clearly this discontinuity is dominating the correction (which is unsurprising, given that its prefactor will likely be larger than $U^\sigma$).
-% 
-%     Meanwhile, suppose we have a KS state that lies entirely in the subspace spanned by the two other orbitals. Then
-%     %
-%     \begin{equation}
-%         v^\sigma(0.472, 0.245) =
-%         U^\sigma
-%         \left(
-%         \frac{1}{2}
-%         -n^{\sigma}
-%         \right)
-%         - n^{-\sigma}
-%         \left(
-%         \frac{U^\uparrow + U^\downarrow}{2}
-%         + K
-%         \right)
-%         =
-%         \begin{cases}
-%             -1.69 & \sigma = \uparrow   \\
-%             -2.44 & \sigma = \downarrow
-%         \end{cases}
-%     \end{equation}
-% \end{frame}
-% %
-% Ignoring any screening, these are the amounts by which these orbitals would be shifted in energy. If this correction is going to be any good at all, the screening effects would have to be considerable!
-% 
-% \section{Conclusions}
-% \cref{eqn:novel_u_correction,eqn:novel_k_correction} are promising corrections to DFT that separately address self interaction error and static correlation without coupling the two. They are also non-zero at integer occpuancies. This means that they possess several key properties that state-of-the-art DFT\,+\,\emph{U}\,+\,\emph{J} lacks. I still need to work out how to generalise these corrections to multi-orbital Hubbard parameters. If we can do this, then all that remains is to implement them in \textsc{Quantum} ESPRESSO. Only then will we be able to determine if the numerics of these functionals is sufficiently well-behaved, and if they ultimately yield good results.
-% 
-% It is important to acknowledge that Kulik and co-workers experimented with a very similar functional to the ones I have presented in this work (Ref \cite{Bajaj2017}). Their formulation was a little less elegant than mine (if I may say so) because their correction was parametrised by 8 parameters (rather than my three $U^\uparrow$, $U^\downarrow$, and $K$). The reason why I was able to use far fewer parameters is because my functional imposes several key properties explicitly e.g. my functional corrections are continuous across the line $n = 1$. In contrast, their their functional would only be continuous across $n = 1$ for very particular combinations of their 8 parameters. Ultimately they abandoned their model, saying that ``the large number and non-intuitive nature of these parameters, including linear terms and constants, leads us to disfavor this correction form''. In contrast, I have shown that corrections of this form only require a few parameters and these parameters are concretely related to specific curvatures of the system. I therefore draw the opposite conclusion to them: I believe that these corrections are promising and warrant further investigation.
-% 
-% \appendix
-% \section{Derivatives of $E_1$ and $E_2$}
-% \label{sec:derivatives}
-% \subsection{First order derivatives}
-% \noindent The derivative of $E_1$ with respect to $n_\sigma$ is
-% %
-% \begin{align}
-%     \left.\frac{\partial E_1}{\partial n^{\sigma}} \right|_{n^{-\sigma}}
-%     = & 
-%     \sum_{\sigma'} \frac{U^{\sigma'}}{4} \left.\frac{\partial}{\partial n^{\sigma}}\left[|\tilde n| + \tilde n(1 - 2n^{\sigma'})\right] \right|_{n^{-\sigma}}
-%     =
-%     \sum_{\sigma'} \frac{U^{\sigma'}}{4} \left[\frac{|\tilde n|}{\tilde n} + 1 - 2(n^{\sigma'} + \delta_{\sigma\sigma'}\tilde n)\right]
-% \end{align}
-% %
-% and
-% %
-% \begin{align}
-%     \left.\frac{\partial E_2}{\partial n^{\sigma}} \right|_{n^{-\sigma}}
-%     = & 
-%     \frac{K}{4}\left.\frac{\partial}{\partial n^{\sigma}}\left[(n^\uparrow-n^\downarrow)^2-(|\tilde n|-1)^2\right] \right|_{n^{-\sigma}}
-%     =
-%     \frac{K}{2}\left[n^\sigma-n^{-\sigma}-\tilde n+\frac{|\tilde n|}{\tilde n}\right]
-% \end{align}
-% %
-% \subsection{Second order derivatives}
-% \noindent Now to calculate the second derivatives:
-% %
-% \begin{equation}
-%     \left.\frac{\partial^2 E_1}{\partial n^{\sigma 2}} \right|_{n^{-\sigma}}
-%     = 
-%     \sum_{\sigma'} \frac{U^{\sigma'}}{4} \left.\frac{\partial}{\partial n^{\sigma}}\left[\frac{|\tilde n|}{\tilde n} + 1 - 2(n^{\sigma'} + \delta_{\sigma\sigma'}\tilde n)\right] \right|_{n^{-\sigma}}
-%     = -U^\sigma
-% \end{equation}
-% %
-% and
-% %
-% \begin{align}
-%     \left.\frac{\partial}{\partial n^{-\sigma}}\left(\left.\frac{\partial E_1}{\partial n^{\sigma}}\right|_{n^{-\sigma}}\right) \right|_{n^{\sigma}}
-%     = &
-%     \sum_{\sigma'} \frac{U^{\sigma'}}{4} \left.\frac{\partial}{\partial n^{-\sigma}}\left[\frac{|\tilde n|}{\tilde n} + 1 - 2(n^{\sigma'} + \delta_{\sigma\sigma'}\tilde n)\right] \right|_{n^{\sigma}}
-%     \nonumber \\
-%     = & 
-%     -\frac{1}{2}\left.\frac{\partial}{\partial n^{-\sigma}}\left[U^{\sigma}\tilde n + \sum_{\sigma'}U^{\sigma'} n^{\sigma'} \right] \right|_{n^{\sigma}}
-%     \nonumber \\
-%     = & 
-%     -\frac{U^\uparrow + U^\downarrow}{2}
-% \end{align}
-% %
-% and
-% %
-% \begin{equation}
-%     \left.\frac{\partial^2 E_2}{\partial n^{\sigma 2}} \right|_{n^{-\sigma}}
-%     = 
-%     \frac{K}{2}\left.\frac{\partial}{\partial n^{\sigma}}
-%     \left[n^\sigma-n^{-\sigma}-\tilde n+\frac{|\tilde n|}{\tilde n}\right]
-%     \right|_{n^{-\sigma}}
-%     = 0
-% \end{equation}
-% %
-% and
-% %
-% \begin{align}
-%     \left.\frac{\partial}{\partial n^{-\sigma}}\left(\left.\frac{\partial E_2}{\partial n^{\sigma}}\right|_{n^{-\sigma}}\right) \right|_{n^{\sigma}}
-%     = &
-%     \frac{K}{2}\left.\frac{\partial}{\partial n^{-\sigma}}
-%     \left[n^\sigma-n^{-\sigma}-\tilde n+\frac{|\tilde n|}{\tilde n}\right]
-%     \right|_{n^{\sigma}}
-%     = 
-%     -\frac{K}{2}
-% \end{align}
-%
 
-\begin{frame}{Rethinking inter-spin corrections}
-    My new functional
-    \footnotesize
+\begin{frame}{Does BLOR work? Stretched H\textsuperscript{5+}}
+    \begin{center}
+        \includegraphics[height=0.8\textheight]{figures/burgess/mo3.pdf}
+        \hspace{0.05\textwidth}
+        \includegraphics[height=0.8\textheight]{figures/burgess/h5+_extended.pdf}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Does BLOR work?}
+    \begin{tabularx}{0.9\textwidth}{CC}
+        \includegraphics[height=0.6\textheight]{figures/burgess/h2_extended.pdf} &
+        \includegraphics[height=0.6\textheight]{figures/burgess/He2+.pdf}          \\
+        stretched H\textsubscript{2}                                             &
+        stretched He$_2^+$                                                         \\
+    \end{tabularx}
+\end{frame}
+
+\begin{frame}{Does BLOR work?}
+    \begin{tabularx}{0.9\textwidth}{CC}
+        \includegraphics[height=0.6\textheight]{figures/burgess/Li2.pdf} &
+        \includegraphics[height=0.6\textheight]{figures/burgess/Be2+.pdf}  \\
+        stretched Li\textsubscript{2}                                    &
+        stretched Be$_2^+$                                                 \\
+    \end{tabularx}
+\end{frame}
+
+\begin{frame}{Conclusions}
+    \begin{itemize}
+        \item we can get excellent total energies when we take the mandate of the flat plane seriously
+        \item BUT still many important details to be worked out...
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{``Potential'' issues...}
+    The resulting potential from the SIE energy correction is given by $\hat v^\sigma_1 = v^\sigma_1(n^\uparrow_i, n^\downarrow_i) \ket{i}\bra{i}$ where
+    %
     \begin{columns}
-        \column{0.3\linewidth}
-        \begin{figure}
-            \centering
-            \begin{subfigure}[b]{\columnwidth}
-                \includegraphics[width=\columnwidth]{figures/novel_u_correction_equal.pdf}
-            \end{subfigure}
-            \begin{subfigure}[b]{\columnwidth}
-                \includegraphics[width=\columnwidth]{figures/novel_k_correction.pdf}
-            \end{subfigure}
-        \end{figure}
-        \column{0.68\linewidth}
-        \begin{equation}
-            E_1(\{U^\sigma\}, \{n^\sigma\}) =
-            \sum_\sigma \frac{U^\sigma}{2} \left(n^\uparrow + n^\downarrow - 1\right) \times
+        \column{0.5\textwidth}
+        \small
+        \begin{align*}
+            v^\sigma_1(n^\uparrow, n^\downarrow)
+            % = -\frac{\tilde n U^\sigma}{2} + \sum_{\sigma'} \frac{U^{\sigma'}}{4} \left[\frac{|\tilde n|}{\tilde n} + 1 - 2n^{\sigma'}\right]
+            = &
             \begin{cases}
-                -n^\sigma    & n < 1 \\
-                1 - n^\sigma & n > 1
-            \end{cases}
-        \end{equation}
-        \begin{equation}
-            E_2(K, \{n^\sigma\}) % = & \frac{K}{4}\left[(n^\uparrow-n^\downarrow)^2-(|\tilde n|-1)^2\right] \nonumber \\
-            % = & \frac{K}{4}\left[(n^\uparrow)^2 - 2n^\uparrow n^\downarrow + (n^\downarrow)^2-(n^\uparrow + n^\downarrow - 1)^2 + 2(|n^\uparrow + n^\downarrow - 1|) -1)\right] \nonumber \\
-            % = & \frac{K}{2}\left[- 2 n^\uparrow n^\downarrow + n^\uparrow + n^\downarrow - 1 + (|n^\uparrow + n^\downarrow - 1|)\right] \nonumber \\
-            = \begin{cases}
-                - Kn^\uparrow n^\downarrow            & n < 1 \\
-                - K(1 - n^\uparrow)(1 - n^\downarrow) & n > 1
-            \end{cases}
-        \end{equation}
-
-        \begin{equation}
-            v^\sigma(n^\uparrow, n^\downarrow) =
-            \begin{cases}
-                {U^\sigma}
-                \left(\frac{1}{2} - n^\sigma\right)
-                +
-                \left(
-                1 - n^{-\sigma}
-                \right)
-                \left(
+                U^\sigma\left(\frac{1}{2} - n^\sigma\right)
+                + \left(1 - n^{-\sigma}\right)
                 \frac{U^\uparrow + U^\downarrow}{2}
-                +K
-                \right)
-                 & n > 1 \\
-                U^\sigma
-                \left(
-                \frac{1}{2}
-                -n^{\sigma}
-                \right)
+                 & n > 1
+                \\
+                U^\sigma\left(\frac{1}{2} - n^\sigma\right)
                 - n^{-\sigma}
-                \left(
                 \frac{U^\uparrow + U^\downarrow}{2}
-                + K
-                \right)
                  & n < 1
             \end{cases}
-            \label{eqn:the_combined_potential}
-        \end{equation}
-        Open questions:
-        \begin{itemize}
-            \item does this fix total energies?
-            \item is the discontinuity at $n=1$ a problem?
-            \item how best to generalise to multiple orbitals?
-            \item what is the effect of orbital relaxation?
-        \end{itemize}
+            \label{eqn:novel_u_potential}
+        \end{align*}
+
+        \vspace{6pt}
+        $\rightarrow$ issues for single-particle energies?
+
+        \vspace{6pt}
+        Numerically, can either adopt some smoothing OR Hund's rule comes to the rescue
+
+        \vspace{6pt}
+        Other issues include local vs global curvature
+
+        \column{0.4\textwidth}
+        \begin{figure}[t!]
+            \includegraphics[width=\columnwidth]{figures/novel_u_potential.pdf}
+            \label{fig:novel_u_potential}
+        \end{figure}
     \end{columns}
-\end{frame}
-
-\begin{frame}{Linearization}
-
-\end{frame}
-
-\begin{frame}{DFT+U}
 
 \end{frame}
 
 \begin{frame}{Acknowledgements}
 
-   \begin{center}
-      \footnotesize
-      \begin{tabularx}{0.5\textwidth}{CC}
-         \includegraphics[height = 0.4\paperheight]{photos/andrew_burgess.png}     &
-         \includegraphics[height = 0.4\paperheight]{figures/david_oregan.jpg}    \\
-         % \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg}       &
-         % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
-         % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
-         Andrew Burgess                                                             &
-         David O'Regan                                                             \\
-      \end{tabularx}
-   \end{center}
+    \begin{center}
+        \footnotesize
+        \begin{tabularx}{0.5\textwidth}{CC}
+            \includegraphics[height = 0.4\paperheight]{photos/andrew_burgess.png} &
+            \includegraphics[height = 0.4\paperheight]{figures/david_oregan.jpg}    \\
+            % \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg}       &
+            % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
+            % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
+            Andrew Burgess                                                        &
+            David O'Regan                                                           \\
+        \end{tabularx}
+    \end{center}
 
-   \vspace{1ex}
-   \begin{center}
-      paper available at PRB 107, L121115 (2023) | slides available at \includegraphics[height=\fontcharht\font`\B]{logos/github-favicon.png} github/elinscott
-   \end{center}
+    \vspace{1ex}
+    \begin{center}
+        paper available at PRB 107, L121115 (2023) | slides available at \includegraphics[height=\fontcharht\font`\B]{logos/github-favicon.png} elinscott (and the wiki!)
+    \end{center}
 
 
-   % \begin{multicols}{2}
-   %    \tiny
-   %    \printbibliography
-   %    \normalsize
-   % \end{multicols}
-   \vspace{2ex}
-   \scriptsize
+    % \begin{multicols}{2}
+    %    \tiny
+    %    \printbibliography
+    %    \normalsize
+    % \end{multicols}
+    \vspace{2ex}
+    \scriptsize
 
-   \setbeamercolor*{bibliography entry title}{fg=black}
-   \setbeamercolor*{bibliography entry author}{fg=black}
-   \setbeamercolor*{bibliography entry location}{fg=black}
-   \setbeamercolor*{bibliography entry note}{fg=black}
+    \setbeamercolor*{bibliography entry title}{fg=black}
+    \setbeamercolor*{bibliography entry author}{fg=black}
+    \setbeamercolor*{bibliography entry location}{fg=black}
+    \setbeamercolor*{bibliography entry note}{fg=black}
 
-   \vspace{2ex}
-   \scriptsize
+    \vspace{2ex}
+    \scriptsize
 \end{frame}
 
-\backupbegin
-\begin{frame}{}
-
-   \begin{center}
-      \huge SPARE SLIDES
-   \end{center}
-
-\end{frame}
-
-\begin{frame}{Spare slide}
-\end{frame}
-
-
-% \begin{frame}{References}
-%    \setbeamercolor*{bibliography entry title}{fg=black}
-%    \setbeamercolor*{bibliography entry author}{fg=black}
-%    \setbeamercolor*{bibliography entry location}{fg=black}
-%    \setbeamercolor*{bibliography entry note}{fg=black}
-%    \printbibliography
-%    % For further reading on Koopmans functionals, see \cite{Dabo2010,Borghi2014,Nguyen2018,Colonna2018,Colonna2019,DeGennaro2022,Colonna2022}
+% \backupbegin
+% \begin{frame}{}
 % 
-% \end{frame}
-% \begin{frame}{Learning the screening parameters}
-%    \begin{center}
-%       \begin{tikzpicture}
-%          \node[inner sep=0pt] (water box) at (0,0)
-%          {
-%             \includegraphics[width=0.25\textwidth]{figures/orbital.emp.00191_cropped.png}
-%          };
-%          \node[below=0cm of water box] (density) {$\rho_i(\mathbf{r})$};
-%          \node[right=0.2\textwidth of water box] (power spectrum) {
-%             $
-%                \begin{bmatrix}
-%                   x_{0} \\
-%                   x_{1} \\
-%                   x_{2} \\
-%                   \vdots
-%                \end{bmatrix}
-%             $
-%          };
-%          \path[line] (water box) -- node [midway, above, align=center] (decomposition) {power spectrum \\ decomposition} (power spectrum);
-%          \node[right=0.2\textwidth of power spectrum] (screening parameter) {$\alpha_i$};
-%          \path[line] (power spectrum) -- node [midway, above, align=center] (model) {ML model} (screening parameter);
-%       \end{tikzpicture}
-%    \end{center}
-% 
-%    \vspace{-4em}
-% 
-%    \blfootcite{Schubert2022}
-% 
-%    \begin{align*}
-%       c^i_{nlm,k=\mathsf{orbital}} & =\int d\textbf{r} g_{nl}(r)Y_{lm}(\theta,\varphi)\rho^i(\textbf{r}-\textbf{R}^i)                        \\
-%       p^i_{n_1n_2l,k_1k_2}         & =\pi \sqrt{\frac{8}{2l+1}}\sum\limits_m {c_{n_1lm,k_1}^{i *}}c_{n_2lm,k_2}^i \label{eq: power spectrum}
-%    \end{align*}
-% 
-%    % $g_{nl}$ = orthonormalised radial Gaussian basis functions
-% 
-%    % $Y_{lm}$ = spherical harmonics
+%     \begin{center}
+%         \huge SPARE SLIDES
+%     \end{center}
 % 
 % \end{frame}
 % 
-% \begin{frame}{Learning the screening parameters}
-%    \begin{center}
-% 
-%       \includegraphics[height=0.7\paperheight]{figures/CsSnI3_calc_vs_pred_Edward.png}
-%       \includegraphics[height=0.7\paperheight]{figures/convergence_analysis_Edward.png}
-% 
-%       loss of accuracy of the band gap of $\sim$ 0.02 eV
-% 
-%       (cf. when calculating screening parameters \emph{ab initio})
-% 
-%       speedup of 70$\times$
-%    \end{center}
-% 
-%    \blfootcite{Schubert2022}
-% 
+% \begin{frame}{Spare slide}
 % \end{frame}
-
-
-\backupend
+% 
+% 
+% \backupend
 \end{document}
