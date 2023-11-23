@@ -231,9 +231,9 @@
 
 \setbeamercolor*{author in head/foot}{bg=seaborn_blue}
 \setbeamercolor*{logo in head/foot}{bg=seaborn_blue,fg=white}
-\setbeamercolor*{title in head/foot}{bg=seaborn_blue,fg=white}
+\setbeamercolor*{title in head/foot}{bg=seaborn_blue,fg=kgrey}
 \setbeamercolor*{date in head/foot}{bg=seaborn_blue,fg=white}
-\setbeamercolor{title}{bg=seaborn_blue}
+\setbeamercolor{title}{fg=kgrey}
 \setbeamercolor{under headline}{bg=seaborn_red}
 \setbeamercolor{footline}{bg=seaborn_blue}
 \setbeamercolor{caption name}{fg=seaborn_blue}
@@ -243,7 +243,6 @@
 % Footnote style and colour
 % No line over footnote
 \setbeamercolor{footnote}{fg=seaborn_bg_grey_darker}
-
 \setbeamertemplate{enumerate items}[default]
 \setbeamertemplate{blocks}[default]
 \setbeamertemplate{itemize items}{\normalsize $\bullet$}
@@ -277,7 +276,7 @@
 	
 }
 
-\newcommand{\insertframeinfo}{| \insertframenumber/\inserttotalframenumber}
+\newcommand{\insertframeinfo}{\insertframenumber/\inserttotalframenumber}
 \newcommand{\backupbegin}{
    \newcounter{finalframe}
    \setcounter{finalframe}{\value{framenumber}}
@@ -293,7 +292,7 @@
   \vspace{-1pt}
   \begin{beamercolorbox}[wd=\paperwidth,ht=0.8cm]{frametitle}
    \hspace{0.05em}
-   \begin{minipage}{0.8\textwidth}
+   \begin{minipage}[c]{0.8\textwidth}
      \bf \insertframetitle
 
    \end{minipage}
@@ -302,8 +301,10 @@
    \begin{flushright}
    \scriptsize \textbf{Edward Linscott}
    
-   \includegraphics[height=0.21cm]{logos/white_cropped.eps}
-   \textbf{\insertframeinfo}
+   {\raisebox{-0.15cm}{\includegraphics[height=0.45cm]{logos/psi_on_transparent.png}}
+   \textbf{|}\hspace{0.1cm}
+   \raisebox{-0.02cm}{\textbf{\insertframeinfo}}}%
+   \vspace{-0.1cm}
    \end{flushright}
    \end{minipage}
    \vspace{0.125cm}
@@ -314,10 +315,9 @@
 {
   \leavevmode%
   \vbox{%
-  \vspace{-1.6ex}%
-  \noindent\begin{tcolorbox}[enhanced,watermark graphics=photos/EPFL-Leman-vue-aerienne-1536x864.jpg, width=\paperwidth, height=0.57\paperwidth, watermark zoom=1.25, grow to left by=0.035\paperwidth, frame hidden]
+  \vspace{-0.2ex}%
+  \noindent\begin{tcolorbox}[enhanced,watermark graphics=photos/psi_in_mist.jpg, width=\paperwidth, height=0.667\paperwidth, watermark zoom=1.0, grow to left by=0.05\paperwidth, frame hidden, coltext=kgrey]
 
-  \vspace{1.5ex}
   \begin{minipage}{\textwidth}
    \begin{flushright}
    \includegraphics[height=0.05\textheight]{figures/logo_marvel_color_transparent.png}
@@ -328,18 +328,19 @@
    \hspace{0.1cm}\hbox{}
   \end{flushright}
 
-  \vspace{2.5em}
+  \vspace{1.5em}
   \begin{center} 
   \huge
-  \textbf{BLOR}
+
+  \textbf{\inserttitle}
 
   \large
-  \textbf{a DFT+U-inspired functional that properly linearizes the total energy}
+  \textbf{\insertsubtitle}
   \end{center}
   \end{minipage}
   \end{tcolorbox}
 
-  \vspace{-2em}
+  \vspace{-6.7em}
   \begin{tcolorbox}[width=\paperwidth, enhanced, colback=kgrey, grow to left by=0.035\paperwidth,]
   \begin{center}
   \footnotesize \bf \insertauthor\quad | \quad\insertshortinstitute\quad | \quad THEOS Group Meeting \quad|\quad \insertdate    
@@ -358,24 +359,27 @@
 
 % Title slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Edward Linscott}
-\institute{EPFL}
-\date{6 June 2023}
+\institute{PSI}
+\date{? December 2023}
+\title{Black-box Koopmans band structures}
+\subtitle{or: getting lost down a rabbit hole of pseudopotential generation}
 \begin{document}
 
-\begin{frame}{Lorde: Te Ao Mārama}
+\begin{frame}{Beethoven's late string quartets}
     \centering
 
-
-    \includegraphics[height=0.5\paperheight]{te_ao_maarama/lorde.jpg} \hspace{1em}
-    \includegraphics[height=0.5\paperheight]{te_ao_maarama/te_ao_maarama.jpg}
+    String Quartet No. 14 - Adagio ma non troppo e molto espressivo
 
     \vspace{6pt}
 
-    ``The future of music'' -- David Bowie
+    \includegraphics[height=0.6\paperheight]{photos/beethoven.jpg}
 
-    \vspace{6pt}
+    {\tiny \href{https://www.youtube.com/watch?v=JE_crvhG3Co\&t=454s\&ab_channel=DavidSukonick\#t=4m27s}{click here for video}}
 
-    \tiny \href{https://www.youtube.com/watch?v=H1u0ukFst60&ab_channel=LordeVEVO}{click here for video}
+    \onslide<2->{``indecipherable, uncorrected horrors'' -- Spohr}
+
+    \onslide<3->{``After this, what is left for us to write?'' -- Schubert}
+
 \end{frame}
 
 \begin{frame}{Leaving the group}
