@@ -318,20 +318,21 @@
 {
   \leavevmode%
   \vbox{%
-  \vspace{-0.2ex}%
-  \noindent\begin{tcolorbox}[enhanced,watermark graphics=photos/psi_in_mist.jpg, width=\paperwidth, height=0.667\paperwidth, watermark zoom=1.0, grow to left by=0.05\paperwidth, frame hidden, coltext=kgrey]
+  \vspace{-0.15\paperwidth}%
+  \noindent\begin{tcolorbox}[enhanced,watermark graphics=photos/psi_in_mist_large.jpg, width=1.01\paperwidth, height=0.741\paperwidth, watermark zoom=1.0, grow to left by=0.05\paperwidth, frame hidden, coltext=kgrey]
+
+  \vspace{0.26\paperwidth}
 
   \begin{minipage}{\textwidth}
-   \begin{flushright}
-   \includegraphics[height=0.05\textheight]{figures/logo_marvel_color_transparent.png}
-   \hspace{0.1ex}
-   \includegraphics[height=0.05\textheight]{logos/SNF_logo_standard_web_color_pos_e.png}
-   % \hspace{0.01\textheight}
-   % \includegraphics[height=0.05\textheight]{logos/black_cropped.eps}
-   \hspace{0.1cm}\hbox{}
-  \end{flushright}
+  %  \begin{flushright}
+  %  \includegraphics[height=0.05\textheight]{logos/logo_marvel_color_transparent.png}
+  %  \hspace{0.1ex}
+  %  \includegraphics[height=0.05\textheight]{logos/SNF_logo_standard_web_color_pos_e.png}
+  %  % \hspace{0.01\textheight}
+  %  % \includegraphics[height=0.05\textheight]{logos/black_cropped.eps}
+  %  \hspace{0.1cm}\hbox{}
+  % \end{flushright}
 
-  \vspace{1.5em}
   \begin{center} 
   \LARGE
 
@@ -343,11 +344,13 @@
   \end{minipage}
   \end{tcolorbox}
 
-  \vspace{-6.7em}
-  \begin{tcolorbox}[width=\paperwidth, enhanced, colback=kgrey, grow to left by=0.035\paperwidth,]
-  \begin{center}
-  \footnotesize \bf \insertauthor\quad | \quad\insertshortinstitute\quad | \quad THEOS Group Meeting \quad|\quad \insertdate    
-  \end{center}
+  \vspace{-3.7em}
+  \begin{tcolorbox}[width=0.976\paperwidth, enhanced, colback=kgrey, grow to left by=0.035\paperwidth,]
+  %  \begin{center}
+  %  \footnotesize\bf\insertauthor\quad \raisebox{0.1ex}{|} \quad \insertshortinstitute\ \quad \raisebox{0.1ex}{|} \quad THEOS Group Meeting \quad \raisebox{0.1ex}{|} \quad \insertdate \quad \raisebox{0.1ex}{|} \quad \includegraphics[height=1.5ex]{logos/SNF_logo_standard_web_sw_neg_e.png} \ \ \includegraphics[height=1.5ex]{logos/logo_marvel_color_transparent_inverted.png}
+  %  \end{center}
+  \vspace{-0.7ex}
+  \hfill \footnotesize\bf\insertauthor \hfill \raisebox{0.1ex}{|} \hfill \raisebox{-1.1ex}{\includegraphics[height=3.4ex]{logos/psi_on_transparent.png}} \hfill \raisebox{0.1ex}{|} \hfill THEOS Group Meeting \hfill \raisebox{0.1ex}{|} \hfill \insertdate \hfill \raisebox{0.1ex}{|} \hfill \includegraphics[height=1.5ex]{logos/SNF_logo_standard_web_sw_neg_e.png} \ \ \includegraphics[height=1.5ex]{logos/logo_marvel_color_transparent_inverted.png} \ \hfill
   %  \end{flushright}
   \end{tcolorbox}
   }
@@ -363,7 +366,7 @@
 % Title slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Edward Linscott}
 \institute{PSI}
-\date{? December 2023}
+\date{? January 2024}
 \title{Towards black-box Koopmans band structures}
 \subtitle{or: getting lost down a pseudopotential-generation rabbit hole}
 \begin{document}
@@ -689,11 +692,12 @@
 \end{frame}
 
 \begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
-    Most of the infrastructure was from the \texttt{cookiecutter} I used (see my July 2022 GM)
 
-    Already used in \texttt{AiiDA}
-
-    Also have unmerged tools for \texttt{oncvpsp} input and output files as well as Junfeng's custom \texttt{.dat} projector files (perhaps \texttt{oncvpsp-tools} Need to decide on the right home for these
+    \begin{itemize}
+        \item Most of the infrastructure was from the \texttt{cookiecutter} I used (see my July 2022 GM)
+        \item Publish your code! \texttt{upf-tools} was discovered by Marnik and is now used in \texttt{AiiDA}
+        \item Also have unmerged tools for \texttt{oncvpsp} input and output files as well as Junfeng's custom \texttt{.dat} projector files (perhaps \texttt{oncvpsp-tools} Need to decide on the right home for these...
+    \end{itemize}
     
 \end{frame}
 
