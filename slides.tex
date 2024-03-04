@@ -366,7 +366,7 @@
 % Title slide %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Edward Linscott}
 \institute{PSI}
-\date{? January 2024}
+\date{9 April 2024}
 \title{Towards black-box Koopmans band structures}
 \subtitle{or: getting lost down a pseudopotential-generation rabbit hole}
 \begin{document}
@@ -607,8 +607,10 @@
 
    What still stands in our way? Take the example of silicon:
 
-   \vspace{-1ex}
-   \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+   \onslide<2->{
+      \vspace{-1ex}
+      \inputminted[fontsize=\scriptsize]{json}{scripts/si.json}
+   }
 
 \end{frame}
 
@@ -646,7 +648,7 @@
 \end{frame}
 
 \begin{frame}{Automating Wannierization}
-   We separate target manifolds via parallel transport to obtain separate occupied and empty manifolds
+   Aside: we must additionally use a parallel transport algorithm to separate the occupied and empty manifolds
 
       \begin{figure}
          \includegraphics[width=0.3\columnwidth]{figures/target_manifolds_fig1b.png}
@@ -666,37 +668,129 @@
 
    \onslide<4->{e.g. LiF}
 
-   \onslide<5->{Li 1s\textsuperscript{2} 2s\textsuperscript{1}} \onslide<6->{$\rightarrow$ 2 PAOs (1s, 2s)}
+   \onslide<5->{
 
-   \onslide<7->{F \textcolor{seaborn_bg_grey_darker}{[1s\textsuperscript{2}]} 2s\textsuperscript{2} 2p\textsuperscript{5}} \onslide<8->{$\rightarrow$ 4 PAOs (1s, 2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z})}
+   \begin{center}
+      \begin{tabular}[h]{cccc}
+         element & electronic configuration & \onslide<6->{PAOs} & \onslide<7->{number of PAOs} \\
+         \hline
+         Li      & 1s\textsuperscript{2} 2s\textsuperscript{1} & \onslide<6->{1s, 2s} & \onslide<7->{2} \\
+         \onslide<8->{F}       & \onslide<8->{\textcolor{seaborn_bg_grey_darker}{[1s\textsuperscript{2}]} 2s\textsuperscript{2} 2p\textsuperscript{5}} & \onslide<9->{2s, 2p\textsubscript{x}, 2p\textsubscript{y}, 2p\textsubscript{z}} & \onslide<9->{4}
+      \end{tabular}
+   \end{center}
+   }
 
-   \onslide<9->{6 Wannier functions for a system with 10 electrons} \onslide<10->{= 5 occupied bands + only 1 unoccupied band!}
+   \vspace{1ex}
+   \onslide<10->{6 Wannier functions for a system with 10 electrons} \onslide<11->{= 5 occupied bands + only 1 unoccupied band!}
 
-   \onslide<11->{If we want more Wannier functions, we're gonna need \sout{a bigger boat} more PAOs...}
+   \vspace{1ex}
+   \onslide<12->{If we want more Wannier functions, we're gonna need \sout{a bigger boat} more PAOs...}
 
 \end{frame}
 
 \begin{frame}{Automating Wannierization}
     Existing strategy: use the PAOs provided by OpenMX
 
-    \includegraphics[width=0.8\textwidth]{figures/Li8.0.pao_2_2_1_0.png}
+    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_2_2_1_0.png}
+    \includegraphics[width=0.45\textwidth]{figures/Li8.0.pao_10_0_0_0.png}
 
-    \includegraphics[width=0.8\textwidth]{figures/Li8.0.pao_10_0_0_0.png}
+\end{frame}
 
+\begin{frame}{Criteria for ideal projectors}
+
+   The projectability is
+   \begin{equation*}
+      p_{m\mathbf{k}} = \sum_n |\langle \varphi_n \mid \psi_{m\mathbf{k}}\rangle |^2
+   \end{equation*}
+
+   We want a set of projectors such that\dots
+   \begin{itemize}
+      \item they should have a large overlap with some Kohn-Sham states and a small overlap with all the others% i.e. $p_{m\mathbf{k}}$ should be close to 0 or 1 for all $m$ and $\mathbf{k}$
+      \item they should lie within the span of the Kohn-Sham states% i.e. $\sum_{m\mathbf{k}} p_{m\mathbf{k}}$ should be as large as possible
+   \end{itemize}
+
+   We can meet these criteria if we maximise the functional
+   \begin{equation*}
+      F[\{\varphi_n\}] = \frac{1}{N_\mathbf{k} N_w} \sum_{\mathbf{k}} \sum_{m \in \mathcal{S}_\mathbf{k}} p_{m\mathbf{k}}
+   \end{equation*}
+
+   where $\mathcal{S}_\mathbf{k}$ corresponds to the $N_w$-largest values of $p_{m\mathbf{k}}$.
+\end{frame}
+
+\begin{frame}{Silicon}
+   \begin{center}
+   \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability.png}
+   \end{center}
+\end{frame}
+
+\begin{frame}{Silicon}
+   \begin{center}
+   \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability_scores_and_nsteps.png}
+   \end{center}
+\end{frame}
+
+\begin{frame}{Silicon}
+   \begin{center}
+   \hbox{
+   \includegraphics[width=0.45\textwidth]{figures/vconf_tests/Si/default/51688_wannierization_wannierize_bandstructure.png}
+   \raisebox{0.15\textwidth}{\huge $\rightarrow$}
+   \includegraphics[width=0.45\textwidth]{figures/vconf_tests/Si/confined_projectors/10_2.0_2.0/51688_wannierization_wannierize_bandstructure.png}
+   }
+   \end{center}
+\end{frame}
+
+\begin{frame}{LiF}
+   \begin{center}
+   \includegraphics[width=0.6\textwidth]{figures/vconf_tests/LiF/projectability.png}
+   \end{center}
+\end{frame}
+
+\begin{frame}{LiF}
+   \begin{center}
+   \includegraphics[width=0.9\textwidth]{figures/vconf_tests/LiF/projectability_scores_nsteps_and_metric.png}
+   \end{center}
+\end{frame}
+
+\begin{frame}{Si}
+   \begin{center}
+      \hbox{
+      \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/default/62361_wannierization_wannierize_bandstructure.png}
+      \raisebox{0.15\textwidth}{\huge $\rightarrow$}
+      \includegraphics[width=0.45\textwidth]{figures/vconf_tests/LiF/confined_projectors/Li_only/62361_wannierization_wannierize_bandstructure.png}
+      }
+   \end{center}
+\end{frame}
+
+\begin{frame}{Next steps...}
+   \begin{itemize}[<+(1)->]
+      \item decide on a criteria for choosing the confining potential parameters (depth, width, and smoothness)
+      \item if the parameters are system-independent, publish a periodic table of PAOs
+      \item tidy and publish modified \texttt{oncvpsp.x}
+      \item finally do some Koopmans calculations! (Would need a good criteria for which elements to extend)
+   \end{itemize}
+
+   \onslide<6->{Nice to have but not essential:}
+   \begin{itemize}[<+(2)->]
+      \item investigate/resolve bad Wannier90 convergence
+      \item the option to use external projectors in \texttt{projwfc.x}
+   \end{itemize}
+   
 \end{frame}
 
 \begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
 
-    \includegraphics[width=0.8\textwidth]{figures/upf_tools.png}
-
+   \hbox{
+    \includegraphics[width=0.5\textwidth]{figures/upf-tools.png}
+    \includegraphics[width=0.5\textwidth]{figures/oncvpsp-tools.png}
+   }
 \end{frame}
 
 \begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
 
+    Publish your code!
     \begin{itemize}
-        \item Most of the infrastructure was from the \texttt{cookiecutter} I used (see my July 2022 GM)
-        \item Publish your code! \texttt{upf-tools} was discovered by Marnik and is now used in \texttt{AiiDA}
-        \item Also have unmerged tools for \texttt{oncvpsp} input and output files as well as Junfeng's custom \texttt{.dat} projector files (perhaps \texttt{oncvpsp-tools} Need to decide on the right home for these...
+        \item It's easy: most of the infrastructure was from the \texttt{cookiecutter} I used (see my July 2022 GM)
+        \item It avoids duplication: \texttt{upf-tools} was discovered by Marnik and is now used in \texttt{AiiDA}
     \end{itemize}
     
 \end{frame}

@@ -16,6 +16,6 @@
     "pw": {"nbnd": 20},
     "w90": {
       "projections": [[{"fsite": [0.25, 0.25, 0.25], "ang_mtm": "sp3"}],
-                      [{"fsite":[ 0.25, 0.25, 0.25], "ang_mtm": "sp3"}]],
+                      [{"fsite": [0.25, 0.25, 0.25], "ang_mtm": "sp3"}]],
       "dis_froz_max": 10.6,
       "dis_win_max": 16.9}}}
