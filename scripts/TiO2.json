@@ -1,0 +1,23 @@
+{
+  "workflow": {
+    "task": "wannierize",
+    "init_orbitals": "mlwfs",
+    "pseudo_library": "pseudo_dojo_standard_v0.4.1"},
+  "atoms": {
+    "cell_parameters": {
+      "ibrav": 6,
+      "celldms": {"1": 8.675923, "3": 0.645248},
+      "periodic": true},
+    "atomic_positions": {
+      "positions": [
+        ["Ti", 0.5, 0.5, 0.5]
+        ["Ti", 0.0, 0.0, 0.0],
+        ["O", 0.1814, 0.8186, 0.5],
+        ["O", 0.8186, 0.1814, 0.5],
+        ["O", 0.3186, 0.3186, 0.0],
+        ["O", 0.6814, 0.6814, 0.0]
+      ],
+      "units": "crystal"}},
+  "kpoints": {"grid": [3, 3, 4]},
+  "calculator_parameters": {
+      "w90": {"auto_projections": true}}}
