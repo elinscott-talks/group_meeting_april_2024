@@ -112,7 +112,7 @@
 \tikzstyle{headless_line} = [draw, thick, -]
 \tikzstyle{default}    = [rectangle, text centered, rounded corners, text=black, font=\sffamily\footnotesize, align=center]
 \tikzstyle{default_text}    = [rectangle, text width=10cm, text=black,anchor=north west, font=\sffamily]
-\tikzstyle{boxwhite} = [default, fill=white, rounded corners=0.1cm, text width=7cm, align=left]
+\tikzstyle{boxwhite} = [default, fill=white, rounded corners=0.1cm, text width=10cm, align=left]
 \tikzstyle{cp}    = [default, fill=seaborn_blue, text=white, text width=3cm, minimum height=1cm]
 \tikzstyle{pw}    = [cp, fill=seaborn_green]
 \tikzstyle{wannier90}    = [cp, fill=seaborn_cyan]
@@ -410,6 +410,12 @@
    \end{itemize}
 \end{frame}
 
+\begin{frame}{}
+   \begin{center}
+      \Huge \bf A quick recap of Koopmans functionals
+   \end{center}
+\end{frame}
+
 \begin{frame}{A quick recap of Koopmans functionals}
    \begin{columns}
       \begin{column}{0.6\textwidth}
@@ -682,6 +688,13 @@
    }
 
 \end{frame}
+
+\begin{frame}{}
+   \begin{center}
+      \Huge \bf Automated Wannierisation
+   \end{center}
+\end{frame}
+
 % 
 \begin{frame}{Automated Wannierisation}
 
@@ -754,7 +767,7 @@
    \end{columns}
 \end{frame}
 
-\begin{frame}{Automating Wannierisation}
+\begin{frame}{Automated Wannierisation}
 
    A drawback: the number of Wannier functions is determined by the number of PAOs in the pseudopotentials\onslide<2->{... which can be a problem e.g. LiF}
 
@@ -814,30 +827,44 @@
 % 
 % \end{frame}
 
-\begin{frame}{Automating Wannierization}
-   Old strategy: use the PAOs provided by OpenMX
-
-   \includegraphics[width=0.3\textwidth]{figures/Li8.0.pao_2_2_1_0.png}
-   \includegraphics[width=0.3\textwidth]{figures/Li8.0.pao_10_0_0_0.png}
-
-   New strategy: resolve the radial Schrödinger equation for the next subshell
-   \includegraphics[width=0.3\textwidth]{figures/plot_paos/old_projs.png}
-   \includegraphics[width=0.3\textwidth]{figures/plot_paos/new_projs.png}
+\begin{frame}{Automated Wannierization}
+   \begin{tabular}{p{0.3\textwidth} p{0.65\textwidth}}
+   \multicolumn{1}{c}{\textbf{old}} & \multicolumn{1}{c}{\onslide<2->{\textbf{new}}} \\
+   \includegraphics[width=0.28\textwidth]{figures/Li8.0.pao_10_0_0_0_cropped.png}
+   &
+   \leavevmode\onslide<2->{\includegraphics[width=0.26\textwidth]{figures/plot_paos/old_projs.png} %
+   \raisebox{0.125\textwidth}{\huge $\rightarrow$} %
+   \includegraphics[width=0.26\textwidth]{figures/plot_paos/new_projs.png}} \\
+   use the PAOs provided by OpenMX &
+   \onslide<2->{for the pseudopotential in question, resolve the radial Schrödinger equation for the next subshell}
+   \end{tabular}
 
 \end{frame}
 
-\begin{frame}{Solving scalar-relativisitic radial KS}
+\begin{frame}{}
+   \begin{center}
+      \Huge \bf Pseudopotential generation
+   \end{center}
+\end{frame}
+
+\begin{frame}{Pseudopotential generation}
+   \textbf{Solving the KS equations for a radial scalar-relativistic potential}
+
+   \onslide<2->{%
    Solved on a logarithmic grid
    \begin{equation*}
       r_i = r_0 e^{i \Delta x}
    \end{equation*}
+   }
 
+   \onslide<3->{%
    Start with a trial potential $V[n](r)$ and eigenvalue $\varepsilon$. Then the radial wavefunction $R_{nl}$ satisfies
    \begin{align*}
       \frac{1}{r^2} \frac{d^2 R_{n l}(x)}{d x^2}= & \frac{1}{r^2} \frac{d R_{n l}(x)}{d x}+\left(\frac{l(l+1)}{r^2}+M(r)(V(r)-\varepsilon)\right) R_{n l}(r)                                    \\
                                                   & -\frac{\alpha^2}{4 M(r)} \frac{d V(r)}{d r}\left(\frac{1}{r} \frac{d R_{n l}(x)}{d x} - \frac{R_{n l}(r)}{r}\right) .
    \end{align*}
    where $M(r) = 1-\frac{\alpha^2}{4}(V(r)-\varepsilon)$
+   }
 
 \end{frame}
 \begin{frame}{Solving scalar-relativisitic radial KS}
@@ -847,28 +874,96 @@
       R_{nl}(r) \sim r^\gamma; \qquad \gamma=\frac{l \sqrt{l^2-\alpha^2 Z^2}+(l+1) \sqrt{(l+1)^2-\alpha^2 Z^2}}{2 l+1}
    \end{align*}
 
+   \onslide<2->{%
    Extrapolate inwards from the known large-$r$ behaviour
    \begin{align*}
       R_{n l}(r) \sim e^{-k(r) r}, \quad k(r)=\sqrt{\frac{l(l+1)}{r^2}+(V(r)-\epsilon)}
    \end{align*}
+   }
 
-   \begin{itemize}
+   \begin{itemize}[<+(3)->]
       \item if the wavefunction has too many/few nodes, $\varepsilon$ is too high/low
       \item if the wavefunction has a discontinuity where the outward and inward solutions intercept, we can estimate how much $\varepsilon$ needs to change via perturbation theory
-      \item if the wavefunction does not have a discontinuity, we have found a solution! Now cycle for self-consistency over $V(r)$
+      \item if the wavefunction does not have a discontinuity, we have found a solution! Now cycle for self-consistency over $V[n[(r)$
    \end{itemize}
 
 \end{frame}
 
-\begin{frame}{Automating Wannierization}
-   Problem: extra bound states may not exist
+\begin{frame}{Pseudopotential generation}
+   Use this procedure to generate extra PAOs for the Wannierisation
 
-   Solution: add a confining potential
+   \onslide<2->{
+      \vspace{1ex}
+      Problem: extra bound states may not exist
+   }
 
-   Problem: how to choose the confining potential parameters
+   \onslide<3->{
+      \vspace{1ex}
+      Solution: add a confining potential
+   }
+
+   \onslide<4->{
+      \vspace{1ex}
+      Problem: how to choose the confining potential parameters?
+   }
+
+   \onslide<5->{
+      Solution: optimise these criteria across typical structures:
+
+      \begin{center}
+         \footnotesize
+      \begin{tabular}{ccccc}
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-FCC-conv.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-BCC-conv.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-SC-conv.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-Diamond-conv.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-X2O-conv_cell.png} \\
+         FCC & BCC & SC & Diamond & X\textsubscript{2}O \\
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-XO-conv_cell.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-X2O3-conv_cell.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-XO2-conv_cell.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-X2O5-conv_cell.png} &
+         \includegraphics[width=0.125\textwidth]{figures/sssp_structures/P-XO3-conv_cell.png} \\
+         XO & X\textsubscript{2}O\textsubscript{3} & XO\textsubscript{2} & X\textsubscript{2}O\textsubscript{5} & XO\textsubscript{3}
+      \end{tabular}
+   \end{center}
+   }
 \end{frame}
 
-\begin{frame}{Bayesian optimisation}
+\begin{frame}{Pseudopotential generation}
+
+   The projectability is
+   \begin{equation*}
+      p_{m\mathbf{k}} = \sum_n |\langle \varphi_n \mid \psi_{m\mathbf{k}}\rangle |^2
+   \end{equation*}
+
+   \onslide<2->{
+   \vspace{1ex}
+   We want a set of projectors such that\dots
+   \begin{itemize}
+      \item they should have a large overlap with some Kohn-Sham states and a small overlap with all the others% i.e. $p_{m\mathbf{k}}$ should be close to 0 or 1 for all $m$ and $\mathbf{k}$
+      \item they should lie within the span of the Kohn-Sham states% i.e. $\sum_{m\mathbf{k}} p_{m\mathbf{k}}$ should be as large as possible
+   \end{itemize}
+   }
+
+   \onslide<3->{
+   \vspace{1ex}
+   We can meet these criteria if we maximise the functional
+   \begin{equation*}
+      F[\{\varphi_n\}] = \frac{1}{N_\mathbf{k} N_w} \sum_{\mathbf{k}} \sum_{m \in \mathcal{S}_\mathbf{k}} p_{m\mathbf{k}}
+   \end{equation*}
+
+   where $\mathcal{S}_\mathbf{k}$ corresponds to the $N_w$-largest values of $p_{m\mathbf{k}}$.
+   }
+
+   \onslide<4->{
+   \vspace{1ex}
+   Maximise via \emph{Bayesian optimisation}
+   }
+\end{frame}
+
+
+\begin{frame}{Pseudopotential generation}
    \begin{center}
    \only<1>{\includegraphics[height=0.7\textheight]{figures/bayesian_optimisation/frame_00_delay-0.5s.png}}%
    \only<2>{\includegraphics[height=0.7\textheight]{figures/bayesian_optimisation/frame_01_delay-0.5s.png}}%
@@ -935,40 +1030,16 @@
    \blfootnote{\url{https://github.com/bayesian-optimization/BayesianOptimization}}
 \end{frame}
 
-\begin{frame}{Criteria for ideal projectors}
+\begin{frame}{Pseudopotential generation}
+   It works!
 
-   The projectability is
-   \begin{equation*}
-      p_{m\mathbf{k}} = \sum_n |\langle \varphi_n \mid \psi_{m\mathbf{k}}\rangle |^2
-   \end{equation*}
-
-   We want a set of projectors such that\dots
-   \begin{itemize}
-      \item they should have a large overlap with some Kohn-Sham states and a small overlap with all the others% i.e. $p_{m\mathbf{k}}$ should be close to 0 or 1 for all $m$ and $\mathbf{k}$
-      \item they should lie within the span of the Kohn-Sham states% i.e. $\sum_{m\mathbf{k}} p_{m\mathbf{k}}$ should be as large as possible
-   \end{itemize}
-
-   We can meet these criteria if we maximise the functional
-   \begin{equation*}
-      F[\{\varphi_n\}] = \frac{1}{N_\mathbf{k} N_w} \sum_{\mathbf{k}} \sum_{m \in \mathcal{S}_\mathbf{k}} p_{m\mathbf{k}}
-   \end{equation*}
-
-   where $\mathcal{S}_\mathbf{k}$ corresponds to the $N_w$-largest values of $p_{m\mathbf{k}}$.
-\end{frame}
-
-
-\begin{frame}{Optimising the confining potential}
-   
-\end{frame}
-
-\begin{frame}{It works!}
    \begin{center}
       \includegraphics[width=0.6\textwidth]{figures/vconf_tests/Si/projectability.png}
    \end{center}
 \end{frame}
 
 
-\begin{frame}{Automating Wannierisation}
+\begin{frame}{Pseudopotential generation}
    \begin{center}
       \hbox{
          \includegraphics[width=0.45\textwidth]{figures/LiF_bandstructures/default.png}
@@ -996,8 +1067,16 @@
 
 \end{frame}
 
+\begin{frame}
+   \begin{center}
+      \Huge \bf Systematic and accessible infrastructure?
+   \end{center}
+   
+\end{frame}
 
-\begin{frame}{Problems with \texttt{oncvpsp.x}}
+\begin{frame}{Systematic and accessible infrastructure?}
+
+   Currently implemented within a modified version of \texttt{oncvpsp.x}
 
    In \texttt{oncvpsp.x}\dots
 
@@ -1009,7 +1088,7 @@
    
 \end{frame}
 
-\begin{frame}{infrastructure}
+\begin{frame}{Systematic and accessible infrastructure?}
    \begin{tikzpicture}
       % Existing pseudopotential
       \node [cp] (existing_pseudo) at (0,0) {existing \\ pseudopotential};
@@ -1029,7 +1108,7 @@
    \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{infrastructure}
+\begin{frame}{Systematic and accessible infrastructure?}
    \begin{tikzpicture}
       % Existing pseudopotential
       \node [cp] (with_default) at (0,0) {Koopmans calculation with default pseudopotentials};
@@ -1042,22 +1121,6 @@
       \draw [line] (decide) -- (choose);
       \node [boxwhite, right=of choose] (choose_notes) {we don't need/want extra subshells for all elements};
    \end{tikzpicture}
-\end{frame}
-
-\begin{frame}{Next steps...}
-   \begin{itemize}[<+(1)->]
-      \item decide on a criteria for choosing the confining potential parameters (depth, width, and smoothness)
-      \item if the parameters are system-independent, publish a periodic table of PAOs
-      \item tidy and publish modified \texttt{oncvpsp.x}
-      \item finally do some Koopmans calculations! (Would need a good criteria for which elements to extend)
-   \end{itemize}
-
-   \onslide<6->{Nice to have but not essential:}
-   \begin{itemize}[<+(2)->]
-      \item investigate/resolve bad Wannier90 convergence
-      \item the option to use external projectors in \texttt{projwfc.x}
-   \end{itemize}
-
 \end{frame}
 
 \begin{frame}{\footnotesize Maybe the real treasure is the python packages we made along the way}
@@ -1078,39 +1141,21 @@
 
 \end{frame}
 
-\begin{frame}{Take home messages}
-
-   % \includegraphics[height=0.2\paperheight]{figures/colonna_2019_gw100_ip.jpeg}
-   % \hfill
-   \includegraphics[height=0.25\paperheight]{figures/fig_nguyen_prx_bandgaps.png}
-   \hfill
-   \includegraphics[height=0.275\paperheight]{figures/proj_disentanglement_fig1a.png}
-   \hfill
-   \adjustbox{height=0.275\paperheight}{\input{supercell_workflow.tex}\end{tikzpicture}}
-
-   \begin{itemize}
-      \item Koopmans functionals yield band structures with comparable accuracy to state-of-the-art GW
-      \item the release of \texttt{koopmans} means non-experts can now use Koopmans functionals in their own research
-      \item work is ongoing to automate the Wannierization bottleneck
-   \end{itemize}
-
-\end{frame}
-
 \begingroup
 \setbeamertemplate{footline}{}
 \begin{frame}{Acknowledgements}
    \begin{center}
       \footnotesize
-      \begin{tabularx}{\textwidth}{CCCC}
+      \begin{tabularx}{0.7\textwidth}{CCC}
          \includegraphics[height = 0.3\paperheight]{figures/nicola_marzari.jpg}  &
          \includegraphics[height = 0.3\paperheight]{figures/nicola_colonna2.png} &
-         \includegraphics[height = 0.3\paperheight]{photos/riccardo_degennaro.jpeg} \\
+         \includegraphics[height = 0.3\paperheight]{photos/junfeng.jpeg} \\
+
          % \includegraphics[height = 0.2\paperheight]{figures/daniel_cole.jpeg}       &
          % \includegraphics[height = 0.2\paperheight]{figures/mike_payne.jpeg}        &
          % \includegraphics[height = 0.2\paperheight]{figures/david_oregan.jpg}         \\
          Nicola Marzari                                                          &
          Nicola Colonna                                                          &
-         Riccardo De~Gennaro                                                     &
          Junfeng Qiao
       \end{tabularx}
    \end{center}
